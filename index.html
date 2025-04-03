@@ -1,26 +1,75 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>markdown-wizard-scribe</title>
-    <meta name="description" content="Lovable Generated Project" />
-    <meta name="author" content="Lovable" />
-
-    <meta property="og:title" content="markdown-wizard-scribe" />
-    <meta property="og:description" content="Lovable Generated Project" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <title>Markdown Wizard</title>
+    <meta name="description" content="Convert between markdown and rich text with ease" />
+    <meta name="author" content="Markdown Wizard" />
+    <link rel="stylesheet" href="src/styles.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/turndown/dist/turndown.js"></script>
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
   </head>
 
   <body>
-    <div id="root"></div>
-    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
-    <script type="module" src="/src/main.tsx"></script>
+    <div id="root">
+      <div class="app-container">
+        <header>
+          <h1>Markdown Wizard</h1>
+          <p class="subtitle">Convert between markdown and rich text with ease</p>
+          <div class="theme-toggle">
+            <input type="checkbox" id="theme-switch" class="theme-switch-input">
+            <label for="theme-switch" class="theme-switch-label">
+              <span>🌙</span>
+              <span>☀️</span>
+            </label>
+          </div>
+        </header>
+
+        <div class="conversion-controls">
+          <div class="direction-toggle">
+            <input type="radio" id="md-to-rich" name="direction" value="md-to-rich" checked>
+            <label for="md-to-rich">Markdown → Rich Text</label>
+            <input type="radio" id="rich-to-md" name="direction" value="rich-to-md">
+            <label for="rich-to-md">Rich Text → Markdown</label>
+          </div>
+          
+          <div class="options">
+            <input type="checkbox" id="remove-citations" name="remove-citations">
+            <label for="remove-citations">Remove Citations</label>
+          </div>
+        </div>
+
+        <div class="editor-container">
+          <div class="editor-panel">
+            <h2 id="input-label">Markdown Input</h2>
+            <div class="editor-wrapper">
+              <textarea id="input-area" placeholder="Paste your markdown text here..."></textarea>
+            </div>
+          </div>
+          
+          <div class="actions">
+            <button id="convert-btn" class="primary-btn">Convert</button>
+            <button id="swap-btn" class="icon-btn" title="Swap input/output">⇄</button>
+          </div>
+          
+          <div class="editor-panel">
+            <h2 id="output-label">Rich Text Output</h2>
+            <div class="editor-wrapper">
+              <div id="output-area" class="rich-editor" contenteditable="true"></div>
+            </div>
+            <button id="copy-btn" class="secondary-btn">Copy to Clipboard</button>
+          </div>
+        </div>
+        
+        <footer>
+          <p>Perfect for converting ChatGPT outputs and other markdown text</p>
+        </footer>
+      </div>
+    </div>
+    <script src="src/script.js"></script>
   </body>
 </html>
