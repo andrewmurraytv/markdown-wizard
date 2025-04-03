@@ -161,20 +161,49 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 2000);
   }
 
+  // Add microanimation to button
+  function addButtonAnimation(button) {
+    button.addEventListener('mousedown', function() {
+      this.style.transform = 'scale(0.95)';
+    });
+    
+    button.addEventListener('mouseup', function() {
+      this.style.transform = 'scale(1)';
+    });
+    
+    button.addEventListener('mouseleave', function() {
+      this.style.transform = 'scale(1)';
+    });
+    
+    // For touch devices
+    button.addEventListener('touchstart', function(e) {
+      e.preventDefault(); // Prevent default touch behavior
+      this.style.transform = 'scale(0.95)';
+    });
+    
+    button.addEventListener('touchend', function() {
+      this.style.transform = 'scale(1)';
+    });
+  }
+
   // Event listeners
-  convertBtn.addEventListener('click', convert);
+  convertBtn.addEventListener('click', function(e) {
+    e.preventDefault(); // Prevent any default form behavior
+    convert();
+  });
+  
   copyBtn.addEventListener('click', copyToClipboard);
   swapBtn.addEventListener('click', swapContent);
   mdToRichRadio.addEventListener('change', updateLabels);
   richToMdRadio.addEventListener('change', updateLabels);
   
-  // Handle input events for live preview
-  inputArea.addEventListener('input', function() {
-    // Don't do live conversion if it's a large text to prevent performance issues
-    if (inputArea.value.length < 5000) {
-      convert();
-    }
-  });
+  // Disable live preview/automatic conversion
+  // Instead, only convert when the button is clicked
+  
+  // Add animations to all buttons
+  addButtonAnimation(convertBtn);
+  addButtonAnimation(copyBtn);
+  addButtonAnimation(swapBtn);
   
   // Initial label setup
   updateLabels();
