@@ -99,6 +99,11 @@ document.addEventListener('DOMContentLoaded', function() {
       outputText = turndownService.turndown(inputText);
       outputArea.textContent = outputText;
     }
+    
+    // Debug info
+    console.log('Conversion performed:');
+    console.log('Input:', inputText);
+    console.log('Output:', outputText);
   }
 
   // Swap input and output content
@@ -187,18 +192,17 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Event listeners
-  convertBtn.addEventListener('click', function(e) {
-    e.preventDefault(); // Prevent any default form behavior
-    convert();
+  // Make sure we're explicitly defining the click handler
+  convertBtn.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent any default form behavior
+    console.log('Convert button clicked');
+    convert(); // Call the convert function directly
   });
   
   copyBtn.addEventListener('click', copyToClipboard);
   swapBtn.addEventListener('click', swapContent);
   mdToRichRadio.addEventListener('change', updateLabels);
   richToMdRadio.addEventListener('change', updateLabels);
-  
-  // Disable live preview/automatic conversion
-  // Instead, only convert when the button is clicked
   
   // Add animations to all buttons
   addButtonAnimation(convertBtn);
@@ -225,4 +229,10 @@ Try it out by clicking the convert button.`;
   
   // Initial conversion
   convert();
+  
+  // Additional debugging to make sure elements are found
+  console.log('DOM Elements found:');
+  console.log('Convert Button:', convertBtn);
+  console.log('Input Area:', inputArea);
+  console.log('Output Area:', outputArea);
 });
