@@ -90,6 +90,11 @@ document.addEventListener('DOMContentLoaded', function() {
       outputText = marked.parse(inputText);
       outputArea.innerHTML = outputText;
     } else {
+      // If we're converting from rich text to markdown
+      if (inputText.trim() === '') {
+        // If input is empty, try to use the HTML content of the input area
+        inputText = inputArea.innerHTML;
+      }
       // Convert HTML to Markdown
       outputText = turndownService.turndown(inputText);
       outputArea.textContent = outputText;
@@ -163,15 +168,11 @@ document.addEventListener('DOMContentLoaded', function() {
   mdToRichRadio.addEventListener('change', updateLabels);
   richToMdRadio.addEventListener('change', updateLabels);
   
-  // Handle input events for rich text to markdown conversion
+  // Handle input events for live preview
   inputArea.addEventListener('input', function() {
-    if (richToMdRadio.checked) {
-      // Do a live conversion
-      let inputText = inputArea.value;
-      if (removeCitations.checked) {
-        inputText = removeCitationMarkers(inputText);
-      }
-      outputArea.textContent = turndownService.turndown(inputText);
+    // Don't do live conversion if it's a large text to prevent performance issues
+    if (inputArea.value.length < 5000) {
+      convert();
     }
   });
   
