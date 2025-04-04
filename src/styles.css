@@ -167,6 +167,9 @@ h1 {
 .editor-container {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
+  grid-template-areas: 
+    "input actions output"
+    "input-content actions output-content";
   gap: 1rem;
   margin-bottom: 2rem;
 }
@@ -178,6 +181,7 @@ h1 {
   border-radius: var(--radius);
   box-shadow: var(--shadow-md);
   overflow: hidden;
+  grid-column: span 1;
 }
 
 .editor-panel h2 {
@@ -257,8 +261,11 @@ h1 {
 .actions {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 1rem;
+  padding-top: 1rem;
+  position: sticky;
+  top: 1rem;
 }
 
 .primary-btn, .secondary-btn, .icon-btn {
@@ -355,12 +362,17 @@ footer {
   
   .editor-container {
     grid-template-columns: 1fr;
+    grid-template-areas: 
+      "input"
+      "actions"
+      "output";
   }
   
   .actions {
     flex-direction: row;
     justify-content: space-between;
     margin: 1rem 0;
+    position: static;
   }
   
   .conversion-controls {

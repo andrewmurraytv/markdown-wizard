@@ -21,7 +21,10 @@ export function removeCitationMarkers(text) {
   const referencePatterns = [
     /\n+References\s*\n+(?:\d+\..*\n+)*/i,
     /\n+Citations\s*\n+(?:\d+\..*\n+)*/i,
-    /\n+\[\d+\](?:.*\n+)+/  // Citation list in the format [1] Citation text
+    /\n+Sources\s*\n+(?:\d+\..*\n+)*/i,
+    /\n+Bibliography\s*\n+(?:\d+\..*\n+)*/i,
+    /\n+\[\d+\](?:.*\n+)+/,  // Citation list in the format [1] Citation text
+    /\n+\d+\.\s+(?:https?:\/\/|www\.).*(?:\n|$)/mi  // Numbered URL list often used for sources
   ];
   
   for (const pattern of referencePatterns) {
