@@ -43,6 +43,15 @@ export function markdownToRichText(markdown) {
   return marked.parse(markdown);
 }
 
+// Cleans HTML for better copy-paste experience
+export function cleanHtmlForCopy(html) {
+  // Create a temporary div to work with the HTML
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = html;
+  
+  return tempDiv.innerText;
+}
+
 // Convert Rich Text (HTML) to Markdown
 export function richTextToMarkdown(html) {
   return turndownService.turndown(html);

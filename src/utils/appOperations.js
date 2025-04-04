@@ -1,5 +1,5 @@
 
-import { markdownToRichText, richTextToMarkdown, removeCitationMarkers } from './conversion.js';
+import { markdownToRichText, richTextToMarkdown, removeCitationMarkers, cleanHtmlForCopy } from './conversion.js';
 import { copyToClipboard } from './ui.js';
 
 // Update labels based on selected direction
@@ -69,8 +69,8 @@ export function handleCopyToClipboard(mdToRichRadio, outputArea, copyBtn) {
   let textToCopy;
   
   if (mdToRichRadio.checked) {
-    // If we're in markdown to rich text mode, copy the HTML
-    textToCopy = outputArea.innerHTML;
+    // If we're in markdown to rich text mode, copy plain text version of HTML
+    textToCopy = cleanHtmlForCopy(outputArea.innerHTML);
   } else {
     // If we're in rich text to markdown mode, copy the text content
     textToCopy = outputArea.textContent;
