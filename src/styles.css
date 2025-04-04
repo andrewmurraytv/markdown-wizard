@@ -1,5 +1,5 @@
 :root {
-  --bg-primary: #ffffff;
+  --bg-primary: #eeeeee;
   --bg-secondary: #f8fafc;
   --text-primary: #1e293b;
   --text-secondary: #64748b;
@@ -205,8 +205,8 @@ h1 {
   padding: 1rem;
   font-family: var(--font-sans);
   font-size: 1rem;
-  background-color: var(--input-bg);
-  color: var(--text-primary);
+  background-color: #ffffff;
+  color: #000000;
   border: none;
   resize: none;
   outline: none;
@@ -214,6 +214,7 @@ h1 {
 
 .rich-editor {
   overflow-y: auto;
+  color: #000000;
 }
 
 .rich-editor h1, .rich-editor h2, .rich-editor h3, .rich-editor h4, .rich-editor h5, .rich-editor h6 {
