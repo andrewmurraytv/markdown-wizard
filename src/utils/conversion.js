@@ -19,12 +19,16 @@ export function removeCitationMarkers(text) {
   
   // Remove citation lists at the end of the text (often starts with "References" or "Citations")
   const referencePatterns = [
-    /\n+References\s*\n+(?:\d+\..*\n+)*/i,
-    /\n+Citations\s*\n+(?:\d+\..*\n+)*/i,
-    /\n+Sources\s*\n+(?:\d+\..*\n+)*/i,
-    /\n+Bibliography\s*\n+(?:\d+\..*\n+)*/i,
-    /\n+\[\d+\](?:.*\n+)+/,  // Citation list in the format [1] Citation text
-    /\n+\d+\.\s+(?:https?:\/\/|www\.).*(?:\n|$)/mi  // Numbered URL list often used for sources
+    /\n+References\s*\n+(?:[\s\S]*)/i,
+    /\n+Citations\s*\n+(?:[\s\S]*)/i,
+    /\n+Sources\s*\n+(?:[\s\S]*)/i,
+    /\n+Bibliography\s*\n+(?:[\s\S]*)/i,
+    /\n+\[\d+\](?:[\s\S]*)/,  // Citation list in the format [1] Citation text
+    /\n+\d+\.\s+(?:https?:\/\/|www\.).*(?:\n|$)/mi,  // Numbered URL list often used for sources
+    /\n+Sources\s*:(?:[\s\S]*)/i,  // Sources: followed by anything
+    /\n+References\s*:(?:[\s\S]*)/i,  // References: followed by anything
+    /\n+Links\s*:(?:[\s\S]*)/i,  // Links: followed by anything
+    /\n+(?:https?:\/\/|www\.).*(?:\n|$)/mi  // URLs at the end of the document
   ];
   
   for (const pattern of referencePatterns) {
