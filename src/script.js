@@ -82,23 +82,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update labels based on initial selection
     updateLabels(mdToRichRadio, inputLabel, outputLabel, inputArea, outputArea);
     
-    // Sample text for testing (can be removed in production)
-    inputArea.value = `# Markdown Wizard
-
-This is a **powerful tool** for converting between Markdown and Rich Text.
-
-## Features
-
-- Bidirectional conversion
-- Citation removal
-- Mobile responsive design
-
-> Perfect for handling ChatGPT outputs!
-
-Try it out by clicking the convert button.`;
-    
-    // Initial conversion
-    performConversion();
+    // Start with empty input area (removed sample text)
+    inputArea.value = '';
   }
   
   function logElementReferences() {
