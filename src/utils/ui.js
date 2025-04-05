@@ -1,3 +1,4 @@
+
 // Add microanimation to button
 export function addButtonAnimation(button) {
   button.addEventListener('mousedown', function() {
@@ -24,24 +25,29 @@ export function addButtonAnimation(button) {
 }
 
 // Copy text to clipboard
-export function copyToClipboard(text, button) {
-  // Create a temporary text area to hold plain text for copying
-  const tempTextArea = document.createElement('textarea');
-  tempTextArea.value = text;
-  // Make sure the text area uses default black text
-  tempTextArea.style.color = '#000000';
-  tempTextArea.style.opacity = '0';
-  tempTextArea.style.position = 'fixed';
-  document.body.appendChild(tempTextArea);
-  tempTextArea.select();
-  
-  // Use the Clipboard API if available
+export function copyToClipboard(text, button, plainTextFormatting) {
   try {
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text);
+      // For plain text copying
+      if (plainTextFormatting || !text.includes('<')) {
+        navigator.clipboard.writeText(text);
+      } else {
+        // For rich HTML text
+        const blob = new Blob([`<!DOCTYPE html><html><body>${text}</body></html>`], { type: 'text/html' });
+        const clipboardItem = new ClipboardItem({ 'text/html': blob });
+        navigator.clipboard.write([clipboardItem]);
+      }
     } else {
       // Fallback to the older approach
+      const tempTextArea = document.createElement('textarea');
+      tempTextArea.value = text;
+      tempTextArea.style.color = '#000000';
+      tempTextArea.style.opacity = '0';
+      tempTextArea.style.position = 'fixed';
+      document.body.appendChild(tempTextArea);
+      tempTextArea.select();
       document.execCommand('copy');
+      document.body.removeChild(tempTextArea);
     }
     
     // Show feedback
@@ -57,9 +63,15 @@ export function copyToClipboard(text, button) {
     }, 2000);
   } catch (err) {
     console.error('Failed to copy text: ', err);
-  } finally {
-    // Clean up
-    document.body.removeChild(tempTextArea);
+    button.textContent = 'Failed to copy';
+    button.style.backgroundColor = '#f44336';
+    button.style.color = 'white';
+    
+    setTimeout(() => {
+      button.textContent = 'Copy to Clipboard';
+      button.style.backgroundColor = '';
+      button.style.color = '';
+    }, 2000);
   }
 }
 

@@ -1,4 +1,5 @@
 
+
 import { markdownToRichText, richTextToMarkdown, removeCitationMarkers, cleanHtmlForCopy } from './conversion.js';
 import { copyToClipboard } from './ui.js';
 
@@ -65,16 +66,23 @@ export function swapContent(mdToRichRadio, inputArea, outputArea) {
 }
 
 // Handle copy to clipboard functionality
-export function handleCopyToClipboard(mdToRichRadio, outputArea, copyBtn) {
+export function handleCopyToClipboard(mdToRichRadio, outputArea, copyBtn, plainTextFormatting) {
   let textToCopy;
   
   if (mdToRichRadio.checked) {
-    // If we're in markdown to rich text mode, copy plain text version of HTML
-    textToCopy = cleanHtmlForCopy(outputArea.innerHTML);
+    // If we're in markdown to rich text mode
+    if (plainTextFormatting) {
+      // Plain text version (no formatting)
+      textToCopy = cleanHtmlForCopy(outputArea.innerHTML);
+    } else {
+      // Preserve HTML formatting
+      textToCopy = outputArea.innerHTML;
+    }
   } else {
     // If we're in rich text to markdown mode, copy the text content
     textToCopy = outputArea.textContent;
   }
   
-  copyToClipboard(textToCopy, copyBtn);
+  copyToClipboard(textToCopy, copyBtn, plainTextFormatting);
 }
+

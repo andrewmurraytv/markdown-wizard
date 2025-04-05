@@ -1,4 +1,5 @@
 
+
 // Initialize TurndownService for HTML to Markdown conversion
 const turndownService = new TurndownService({
   headingStyle: 'atx',
@@ -56,3 +57,4 @@ export function cleanHtmlForCopy(html) {
 export function richTextToMarkdown(html) {
   return turndownService.turndown(html);
 }
+

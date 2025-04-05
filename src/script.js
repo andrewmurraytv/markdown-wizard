@@ -1,4 +1,5 @@
 
+
 import { updateLabels, convert, swapContent, handleCopyToClipboard } from './utils/appOperations.js';
 import { addButtonAnimation, setTheme } from './utils/ui.js';
 import { setupEventListeners } from './utils/eventHandlers.js';
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const mdToRichRadio = document.getElementById('md-to-rich');
   const richToMdRadio = document.getElementById('rich-to-md');
   const removeCitations = document.getElementById('remove-citations');
+  const plainFormatting = document.getElementById('plain-formatting');
   const inputLabel = document.getElementById('input-label');
   const outputLabel = document.getElementById('output-label');
   const themeSwitch = document.getElementById('theme-switch');
@@ -36,7 +38,8 @@ document.addEventListener('DOMContentLoaded', function() {
     outputArea,
     inputLabel,
     outputLabel,
-    removeCitations
+    removeCitations,
+    plainFormatting
   });
   
   // Initial setup
@@ -45,3 +48,4 @@ document.addEventListener('DOMContentLoaded', function() {
   // Debug element references
   logElementReferences(convertBtn, inputArea, outputArea);
 });
+

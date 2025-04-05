@@ -1,4 +1,5 @@
 
+
 import { updateLabels, convert, swapContent, handleCopyToClipboard } from './appOperations.js';
 import { addButtonAnimation, setTheme } from './ui.js';
 
@@ -14,7 +15,8 @@ export function setupEventListeners(elements) {
     outputArea,
     inputLabel,
     outputLabel,
-    removeCitations
+    removeCitations,
+    plainFormatting
   } = elements;
   
   // Theme toggle functionality
@@ -31,7 +33,7 @@ export function setupEventListeners(elements) {
   
   // Copy button handler
   copyBtn.addEventListener('click', function() {
-    handleCopyToClipboard(mdToRichRadio, outputArea, copyBtn);
+    handleCopyToClipboard(mdToRichRadio, outputArea, copyBtn, plainFormatting.checked);
   });
   
   // Swap button handler
@@ -53,3 +55,4 @@ export function setupEventListeners(elements) {
   addButtonAnimation(copyBtn);
   addButtonAnimation(swapBtn);
 }
+
