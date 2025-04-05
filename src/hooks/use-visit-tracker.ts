@@ -29,11 +29,13 @@ export const useVisitTracker = () => {
           .eq('ip_address', visitorId);
 
         // Record this visit
-        await supabase.from('user_visits').insert({
-          user_id: user?.id || null,
-          ip_address: visitorId,
-          registered: !!user
-        });
+        await supabase
+          .from('user_visits')
+          .insert({
+            user_id: user?.id || null,
+            ip_address: visitorId,
+            registered: !!user
+          });
 
         // If this is not the first visit and user is not authenticated, redirect to auth page
         if (visits && visits.length > 0 && !user) {

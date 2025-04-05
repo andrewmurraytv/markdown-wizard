@@ -33,9 +33,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           // Handle sign in - update last login
           if (session?.user) {
             setTimeout(() => {
-              supabase.from('profiles').update({ 
-                last_login: new Date().toISOString() 
-              }).eq('id', session.user.id);
+              supabase
+                .from('profiles')
+                .update({ 
+                  last_login: new Date().toISOString() 
+                })
+                .eq('id', session.user.id);
             }, 0);
           }
         }
