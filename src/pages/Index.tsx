@@ -5,9 +5,10 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
+import { Bookmark } from "lucide-react";
 
 const Index = () => {
-  const { isFirstVisit, isLoading, shouldPromptSignup } = useVisitTracker();
+  const { isFirstVisit, isLoading, shouldPromptSignup, trackInputClick } = useVisitTracker();
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const [inputText, setInputText] = useState("");
@@ -25,6 +26,7 @@ const Index = () => {
 
   const handleInputClick = () => {
     setInputText("");
+    trackInputClick();
   };
 
   // This is the HTML content from the original index.html file
@@ -34,6 +36,9 @@ const Index = () => {
       <header>
         <h1>ChatGPT Cleaner</h1>
         <p className="subtitle">Convert between markdown and rich text with ease</p>
+        <p className="bookmark-text flex items-center gap-1 text-sm text-gray-600">
+          <Bookmark className="h-4 w-4" /> Bookmark this tool
+        </p>
         <div className="theme-toggle">
           <input type="checkbox" id="theme-switch" className="theme-switch-input" />
           <label htmlFor="theme-switch" className="theme-switch-label">
@@ -68,7 +73,7 @@ const Index = () => {
 
       <div className="editor-container">
         <div className="editor-panel">
-          <h2 id="input-label">Markdown Input</h2>
+          <h2 id="input-label">AI Text Input</h2>
           <div className="editor-wrapper">
             <textarea 
               id="input-area" 

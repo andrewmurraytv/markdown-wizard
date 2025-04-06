@@ -10,6 +10,20 @@ export const useVisitTracker = () => {
   const [isFirstVisit, setIsFirstVisit] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [shouldPromptSignup, setShouldPromptSignup] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
+
+  // Track input box clicks
+  const trackInputClick = () => {
+    const newClickCount = clickCount + 1;
+    setClickCount(newClickCount);
+    
+    // After 3 clicks, prompt signup if not logged in
+    if (newClickCount >= 3 && !user) {
+      setShouldPromptSignup(true);
+      // We'll redirect to auth after a short delay
+      setTimeout(() => navigate('/auth'), 1000);
+    }
+  };
 
   useEffect(() => {
     const checkAndRecordVisit = async () => {
@@ -38,16 +52,9 @@ export const useVisitTracker = () => {
             registered: !!user
           });
 
-        // Allow 3 visits before prompting for signup
-        if (visits && visits.length >= 3 && !user) {
-          setIsFirstVisit(false);
-          setShouldPromptSignup(true);
-          // We'll redirect to auth after a short delay to allow the UI to render
-          setTimeout(() => navigate('/auth'), 1000);
-        } else {
-          setIsFirstVisit(visits?.length === 0);
-          setShouldPromptSignup(false);
-        }
+        // Set first visit status
+        setIsFirstVisit(visits?.length === 0);
+        
       } catch (error) {
         console.error('Error tracking visit:', error);
       } finally {
@@ -58,5 +65,5 @@ export const useVisitTracker = () => {
     checkAndRecordVisit();
   }, [user, navigate]);
 
-  return { isFirstVisit, isLoading, shouldPromptSignup };
+  return { isFirstVisit, isLoading, shouldPromptSignup, trackInputClick };
 };
