@@ -1,14 +1,31 @@
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useVisitTracker } from "@/hooks/use-visit-tracker";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { toast } from "@/hooks/use-toast";
 
 const Index = () => {
-  const { isFirstVisit, isLoading: isVisitLoading } = useVisitTracker();
+  const { isFirstVisit, isLoading, shouldPromptSignup } = useVisitTracker();
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+  const [inputText, setInputText] = useState("");
+  
+  useEffect(() => {
+    if (shouldPromptSignup) {
+      toast({
+        title: "Whoa cowboy!",
+        description: "Create a free account to continue using this tool for free.",
+        variant: "destructive",
+        duration: 5000,
+      });
+    }
+  }, [shouldPromptSignup]);
+
+  const handleInputClick = () => {
+    setInputText("");
+  };
 
   // This is the HTML content from the original index.html file
   // We're recreating the main app structure here in React
@@ -53,7 +70,13 @@ const Index = () => {
         <div className="editor-panel">
           <h2 id="input-label">Markdown Input</h2>
           <div className="editor-wrapper">
-            <textarea id="input-area" placeholder="Paste your markdown text here..."></textarea>
+            <textarea 
+              id="input-area" 
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+              onClick={handleInputClick}
+              placeholder="Paste your markdown text here..."
+            ></textarea>
           </div>
         </div>
         
