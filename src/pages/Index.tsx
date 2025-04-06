@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useVisitTracker } from "@/hooks/use-visit-tracker";
 import { useAuth } from "@/contexts/AuthContext";
@@ -32,7 +33,7 @@ const Index = () => {
   // We're recreating the main app structure here in React
   return (
     <div className="app-container">
-      <header className="relative z-10 flex justify-between items-center p-4">
+      <header className="relative z-10 flex justify-between items-center p-4 bg-white dark:bg-gray-900">
         <div>
           <h1>ChatGPT Cleaner</h1>
           <p className="subtitle">Convert between markdown and rich text with ease</p>
@@ -50,7 +51,7 @@ const Index = () => {
             </label>
           </div>
           
-          {/* Auth controls in the top right */}
+          {/* Auth controls with improved visibility */}
           <div className="flex items-center gap-2">
             {user ? (
               <div className="auth-controls flex items-center gap-2">
@@ -59,10 +60,20 @@ const Index = () => {
               </div>
             ) : (
               <div className="flex items-center gap-2">
-                <Button variant="outline" size="sm" onClick={() => navigate('/auth')} className="flex items-center gap-1">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => navigate('/auth')} 
+                  className="flex items-center gap-1 border border-gray-300"
+                >
                   <LogIn className="h-4 w-4" /> Sign In
                 </Button>
-                <Button variant="default" size="sm" onClick={() => navigate('/auth?tab=signup')} className="flex items-center gap-1">
+                <Button 
+                  variant="default" 
+                  size="sm" 
+                  onClick={() => navigate('/auth?tab=signup')} 
+                  className="flex items-center gap-1 bg-blue-600 hover:bg-blue-700"
+                >
                   <UserPlus className="h-4 w-4" /> Sign Up
                 </Button>
               </div>
