@@ -5,7 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
-import { Bookmark } from "lucide-react";
+import { Bookmark, LogIn, UserPlus } from "lucide-react";
 
 const Index = () => {
   const { isFirstVisit, isLoading, shouldPromptSignup, trackInputClick } = useVisitTracker();
@@ -33,7 +33,7 @@ const Index = () => {
   // We're recreating the main app structure here in React
   return (
     <div className="app-container">
-      <header>
+      <header className="relative">
         <h1>ChatGPT Cleaner</h1>
         <p className="subtitle">Convert between markdown and rich text with ease</p>
         <p className="bookmark-text flex items-center gap-1 text-sm text-gray-600">
@@ -46,12 +46,25 @@ const Index = () => {
             <span>☀️</span>
           </label>
         </div>
-        {user && (
-          <div className="auth-controls">
-            <span className="user-email">{user.email}</span>
-            <Button variant="ghost" onClick={signOut}>Sign Out</Button>
-          </div>
-        )}
+        
+        {/* Auth controls in the top right */}
+        <div className="absolute top-0 right-0 flex items-center gap-2 p-4">
+          {user ? (
+            <div className="auth-controls flex items-center gap-2">
+              <span className="user-email text-sm">{user.email}</span>
+              <Button variant="outline" size="sm" onClick={signOut}>Sign Out</Button>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="sm" onClick={() => navigate('/auth')} className="flex items-center gap-1">
+                <LogIn className="h-4 w-4" /> Sign In
+              </Button>
+              <Button variant="default" size="sm" onClick={() => navigate('/auth?tab=signup')} className="flex items-center gap-1">
+                <UserPlus className="h-4 w-4" /> Sign Up
+              </Button>
+            </div>
+          )}
+        </div>
       </header>
 
       <div className="conversion-controls">
