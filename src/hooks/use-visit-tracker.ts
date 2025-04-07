@@ -14,14 +14,19 @@ export const useVisitTracker = () => {
 
   // Track input box clicks
   const trackInputClick = () => {
+    console.log("Input clicked, current count:", clickCount);
     const newClickCount = clickCount + 1;
     setClickCount(newClickCount);
     
     // After 3 clicks, prompt signup if not logged in
     if (newClickCount >= 3 && !user) {
+      console.log("Showing signup prompt after 3 clicks");
       setShouldPromptSignup(true);
       // We'll redirect to auth after a short delay
-      setTimeout(() => navigate('/auth'), 1000);
+      setTimeout(() => {
+        console.log("Redirecting to auth page");
+        navigate('/auth?tab=signup');
+      }, 2000);
     }
   };
 
@@ -63,7 +68,7 @@ export const useVisitTracker = () => {
     };
 
     checkAndRecordVisit();
-  }, [user, navigate]);
+  }, [user]);
 
   return { isFirstVisit, isLoading, shouldPromptSignup, trackInputClick };
 };

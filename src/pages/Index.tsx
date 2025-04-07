@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useVisitTracker } from "@/hooks/use-visit-tracker";
 import { useAuth } from "@/contexts/AuthContext";
@@ -33,49 +34,55 @@ const Index = () => {
   return (
     <div className="app-container">
       <header className="relative z-10 flex justify-between items-center p-4 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
-        <div>
-          <h1>ChatGPT Cleaner</h1>
-          <p className="subtitle">Convert between markdown and rich text with ease</p>
-          <p className="bookmark-text flex items-center gap-1 text-sm text-gray-600">
-            <Bookmark className="h-4 w-4" /> Bookmark this tool
-          </p>
-        </div>
-        
-        {/* Auth controls with higher visibility */}
-        <div className="flex flex-col items-end gap-2">
-          <div className="theme-toggle">
-            <input type="checkbox" id="theme-switch" className="theme-switch-input" />
-            <label htmlFor="theme-switch" className="theme-switch-label">
-              <span>🌙</span>
-              <span>☀️</span>
-            </label>
+        <div className="flex justify-between items-center w-full">
+          {/* Left side - Auth controls with higher visibility */}
+          <div className="flex items-center space-x-4">
+            {user ? (
+              <div className="auth-controls flex items-center gap-2">
+                <span className="user-email text-sm">{user.email}</span>
+                <Button variant="outline" size="sm" onClick={signOut}>Sign Out</Button>
+              </div>
+            ) : (
+              <div className="auth-buttons flex items-center gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => navigate('/auth')} 
+                  className="flex items-center gap-1 border border-gray-300 hover:bg-gray-100"
+                >
+                  <LogIn className="h-4 w-4" /> Sign In
+                </Button>
+                <Button 
+                  variant="default" 
+                  size="sm" 
+                  onClick={() => navigate('/auth?tab=signup')} 
+                  className="flex items-center gap-1 bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                  <UserPlus className="h-4 w-4" /> Sign Up
+                </Button>
+              </div>
+            )}
           </div>
           
-          {user ? (
-            <div className="auth-controls flex items-center gap-2 mt-2">
-              <span className="user-email text-sm">{user.email}</span>
-              <Button variant="outline" size="sm" onClick={signOut}>Sign Out</Button>
+          {/* Central title */}
+          <div className="text-center">
+            <h1>ChatGPT Cleaner</h1>
+            <p className="subtitle">Convert between markdown and rich text with ease</p>
+            <p className="bookmark-text flex items-center gap-1 text-sm text-gray-600">
+              <Bookmark className="h-4 w-4" /> Bookmark this tool
+            </p>
+          </div>
+          
+          {/* Right side - Theme toggle */}
+          <div className="flex items-end">
+            <div className="theme-toggle ml-4">
+              <input type="checkbox" id="theme-switch" className="theme-switch-input" />
+              <label htmlFor="theme-switch" className="theme-switch-label">
+                <span>🌙</span>
+                <span>☀️</span>
+              </label>
             </div>
-          ) : (
-            <div className="auth-buttons flex items-center gap-2 mt-2">
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={() => navigate('/auth')} 
-                className="flex items-center gap-1 border border-gray-300 hover:bg-gray-100"
-              >
-                <LogIn className="h-4 w-4" /> Sign In
-              </Button>
-              <Button 
-                variant="default" 
-                size="sm" 
-                onClick={() => navigate('/auth?tab=signup')} 
-                className="flex items-center gap-1 bg-blue-600 hover:bg-blue-700 text-white"
-              >
-                <UserPlus className="h-4 w-4" /> Sign Up
-              </Button>
-            </div>
-          )}
+          </div>
         </div>
       </header>
 
