@@ -14,8 +14,8 @@ export const useVisitTracker = () => {
 
   // Track input box clicks
   const trackInputClick = () => {
-    console.log("Input clicked, current count:", clickCount);
     const newClickCount = clickCount + 1;
+    console.log("Input clicked, new count:", newClickCount);
     setClickCount(newClickCount);
     
     // After 3 clicks, prompt signup if not logged in
