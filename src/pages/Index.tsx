@@ -38,20 +38,27 @@ const Index = () => {
           <p className="subtitle">Convert between markdown and rich text with ease</p>
         </div>
         
-        {/* Auth buttons under the subtitle */}
-        <div className="mt-2 mb-3">
+        {/* Auth buttons - Made more prominent and visible */}
+        <div className="w-full flex justify-center my-3">
           {user ? (
-            <div className="auth-controls flex items-center gap-2">
+            <div className="auth-controls flex items-center gap-3 p-2 bg-gray-50 dark:bg-gray-800 rounded-md">
               <span className="user-email text-sm font-medium">{user.email}</span>
-              <Button variant="outline" size="sm" onClick={signOut}>Sign Out</Button>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={signOut}
+                className="border-red-300 text-red-600 hover:bg-red-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-900/20"
+              >
+                Sign Out
+              </Button>
             </div>
           ) : (
-            <div className="auth-buttons flex items-center gap-2">
+            <div className="auth-buttons flex items-center gap-3 p-2 bg-blue-50 dark:bg-blue-900/20 rounded-md">
               <Button 
                 variant="outline" 
                 size="sm" 
                 onClick={() => navigate('/auth')} 
-                className="flex items-center gap-1 border border-gray-300 hover:bg-gray-100"
+                className="flex items-center gap-1 border border-blue-300 hover:bg-blue-50 dark:border-blue-700 dark:hover:bg-blue-900/30"
               >
                 <LogIn className="h-4 w-4" /> Sign In
               </Button>
@@ -155,7 +162,7 @@ const Index = () => {
         {!user && (
           <Button 
             onClick={() => navigate('/auth')} 
-            className="mt-2"
+            className="mt-2 bg-blue-600 hover:bg-blue-700 text-white font-medium"
           >
             Sign In / Create Account
           </Button>

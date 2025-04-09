@@ -40,6 +40,9 @@ export const useVisitTracker = () => {
         if (!visitorId) {
           visitorId = crypto.randomUUID();
           localStorage.setItem('visitor_id', visitorId);
+          console.log("Created new visitor ID:", visitorId);
+        } else {
+          console.log("Using existing visitor ID:", visitorId);
         }
 
         // Check for previous visits
@@ -59,6 +62,7 @@ export const useVisitTracker = () => {
 
         // Set first visit status
         setIsFirstVisit(visits?.length === 0);
+        console.log("First visit?", visits?.length === 0);
         
       } catch (error) {
         console.error('Error tracking visit:', error);
