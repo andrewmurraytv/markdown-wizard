@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useVisitTracker } from "@/hooks/use-visit-tracker";
 import { useAuth } from "@/contexts/AuthContext";
@@ -38,10 +37,10 @@ const Index = () => {
           <p className="subtitle">Convert between markdown and rich text with ease</p>
         </div>
         
-        {/* Auth buttons - Made more prominent and visible */}
-        <div className="w-full flex justify-center my-3">
+        {/* Auth buttons - IMPORTANT: Making them more visible with clear styling */}
+        <div className="w-full flex justify-center my-4">
           {user ? (
-            <div className="auth-controls flex items-center gap-3 p-2 bg-gray-50 dark:bg-gray-800 rounded-md">
+            <div className="auth-controls flex items-center gap-3 p-3 bg-gray-100 dark:bg-gray-800 rounded-md shadow-sm border border-gray-200 dark:border-gray-700">
               <span className="user-email text-sm font-medium">{user.email}</span>
               <Button 
                 variant="outline" 
@@ -53,7 +52,7 @@ const Index = () => {
               </Button>
             </div>
           ) : (
-            <div className="auth-buttons flex items-center gap-3 p-2 bg-blue-50 dark:bg-blue-900/20 rounded-md">
+            <div className="auth-buttons flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-md shadow-sm border border-blue-100 dark:border-blue-900">
               <Button 
                 variant="outline" 
                 size="sm" 
@@ -157,12 +156,12 @@ const Index = () => {
         </div>
       </div>
       
-      <footer>
+      <footer className="mt-8 pb-8">
         <p>Perfect for cleaning and formatting ChatGPT outputs</p>
         {!user && (
           <Button 
             onClick={() => navigate('/auth')} 
-            className="mt-2 bg-blue-600 hover:bg-blue-700 text-white font-medium"
+            className="mt-4 py-2 px-6 bg-blue-600 hover:bg-blue-700 text-white font-medium text-base shadow-md"
           >
             Sign In / Create Account
           </Button>
