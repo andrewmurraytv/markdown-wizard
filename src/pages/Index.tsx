@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useVisitTracker } from "@/hooks/use-visit-tracker";
 import { useAuth } from "@/contexts/AuthContext";
@@ -30,9 +31,15 @@ const Index = () => {
 
   return (
     <div className="app-container">
-      <header className="relative z-10 flex justify-between items-center p-4 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
-        {/* Auth buttons on the left */}
-        <div className="flex items-center space-x-4">
+      <header className="relative z-10 flex flex-col items-center p-4 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+        {/* Central title */}
+        <div className="text-center mb-2">
+          <h1>ChatGPT Cleaner</h1>
+          <p className="subtitle">Convert between markdown and rich text with ease</p>
+        </div>
+        
+        {/* Auth buttons under the subtitle */}
+        <div className="mt-2 mb-3">
           {user ? (
             <div className="auth-controls flex items-center gap-2">
               <span className="user-email text-sm font-medium">{user.email}</span>
@@ -60,17 +67,12 @@ const Index = () => {
           )}
         </div>
         
-        {/* Central title */}
-        <div className="text-center">
-          <h1>ChatGPT Cleaner</h1>
-          <p className="subtitle">Convert between markdown and rich text with ease</p>
-          <p className="bookmark-text flex items-center gap-1 text-sm text-gray-600">
-            <Bookmark className="h-4 w-4" /> Bookmark this tool
-          </p>
-        </div>
+        <p className="bookmark-text flex items-center gap-1 text-sm text-gray-600 mt-1">
+          <Bookmark className="h-4 w-4" /> Bookmark this tool
+        </p>
         
-        {/* Theme toggle on right */}
-        <div className="flex items-center">
+        {/* Theme toggle */}
+        <div className="absolute right-4 top-4">
           <div className="theme-toggle">
             <input type="checkbox" id="theme-switch" className="theme-switch-input" />
             <label htmlFor="theme-switch" className="theme-switch-label">
