@@ -1,7 +1,6 @@
 
 import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Bookmark } from "lucide-react";
+import { Bookmark, ArrowRightLeft } from "lucide-react";
 
 const Index = () => {
   const [inputText, setInputText] = useState("");
@@ -15,7 +14,7 @@ const Index = () => {
       <header className="relative z-10 flex flex-col items-center p-4 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
         {/* Central title */}
         <div className="text-center mb-4">
-          <h1 className="font-handwriting text-4xl mb-1">ChatGPT Cleaner</h1>
+          <h1 className="font-handwriting text-4xl mb-1 text-accent-primary">ChatGPT Cleaner</h1>
           <p className="subtitle">Convert between markdown and rich text with ease</p>
         </div>
         
@@ -68,7 +67,9 @@ const Index = () => {
         
         <div className="actions">
           <button id="convert-btn" className="primary-btn">Convert</button>
-          <button id="swap-btn" className="icon-btn" title="Swap input/output">⇄</button>
+          <button id="swap-btn" className="icon-btn" title="Swap input/output">
+            <ArrowRightLeft size={18} />
+          </button>
         </div>
         
         <div className="editor-panel">
@@ -81,29 +82,29 @@ const Index = () => {
       </div>
       
       <div className="features-section">
-        <h2>Features</h2>
+        <h2 className="text-2xl font-semibold mb-6">Features</h2>
         <div className="features-grid">
           <div className="feature-card">
-            <h3>Bidirectional Conversion</h3>
+            <h3 className="text-xl font-medium mb-2">Bidirectional Conversion</h3>
             <p>Convert from Markdown to Rich Text or Rich Text to Markdown with a single click.</p>
           </div>
           <div className="feature-card">
-            <h3>Citation Removal</h3>
+            <h3 className="text-xl font-medium mb-2">Citation Removal</h3>
             <p>Automatically strip citation markers like [1], [2,3] and remove source lists from academic or AI-generated texts.</p>
           </div>
           <div className="feature-card">
-            <h3>Format Options</h3>
+            <h3 className="text-xl font-medium mb-2">Format Options</h3>
             <p>Choose between formatted rich text or clean plain text output for perfect pasting into any document.</p>
           </div>
           <div className="feature-card">
-            <h3>Perfect for ChatGPT</h3>
+            <h3 className="text-xl font-medium mb-2">Perfect for ChatGPT</h3>
             <p>Easily format text from AI chatbots for your documents, emails, or websites.</p>
           </div>
         </div>
       </div>
       
-      <footer className="mt-8 pb-8">
-        <p>Perfect for cleaning and formatting ChatGPT outputs</p>
+      <footer className="mt-8 pb-8 text-center">
+        <p className="text-muted-foreground">Perfect for cleaning and formatting ChatGPT outputs</p>
       </footer>
     </div>
   );
