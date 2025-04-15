@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Bookmark, ArrowRightLeft } from "lucide-react";
+import { Bookmark, ArrowRightLeft, ArrowRight } from "lucide-react";
 import { markdownToRichText, richTextToMarkdown, removeCitationMarkers } from "../utils/conversion";
 import { Button } from "@/components/ui/button";
 
@@ -174,25 +174,31 @@ const Index = () => {
           </div>
         </div>
         
-        <div className="actions">
+        <div className="actions flex flex-col items-center">
           <button 
             id="convert-btn" 
-            className="primary-btn"
+            className="primary-btn mb-4"
             onClick={handleConvert}
           >
             Convert
           </button>
+          
+          <div className="conversion-direction flex items-center mb-2">
+            <ArrowRight size={14} className={`text-accent-primary ${!isMarkdownToRich && 'rotate-180'}`} />
+          </div>
+          
           <button 
             id="swap-btn" 
-            className="icon-btn group" 
+            className="swap-btn flex items-center justify-center p-2 bg-accent-primary/10 hover:bg-accent-primary/20 rounded-full transition-all duration-300" 
             title="Swap input/output"
             onClick={handleSwap}
           >
             <ArrowRightLeft 
               size={24} 
-              className="group-hover:rotate-180 transition-transform duration-300" 
+              className="text-accent-primary group-hover:rotate-180 transition-transform duration-300" 
             />
           </button>
+          <span className="text-xs text-gray-500 mt-1">Swap</span>
         </div>
         
         <div className="editor-panel">
