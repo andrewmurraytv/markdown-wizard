@@ -1,12 +1,96 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Bookmark, ArrowRightLeft } from "lucide-react";
+import { markdownToRichText, richTextToMarkdown, removeCitationMarkers } from "../utils/conversion";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
   const [inputText, setInputText] = useState("");
+  const [outputText, setOutputText] = useState("");
+  const [isMarkdownToRich, setIsMarkdownToRich] = useState(true);
+  const [removeCitations, setRemoveCitations] = useState(false);
+  const [plainFormatting, setPlainFormatting] = useState(false);
   
+  // Handle input change
+  const handleInputChange = (e) => {
+    setInputText(e.target.value);
+  };
+
+  // Handle direction change
+  const handleDirectionChange = (e) => {
+    setIsMarkdownToRich(e.target.id === "md-to-rich");
+  };
+  
+  // Handle convert button click
+  const handleConvert = () => {
+    let processedInput = inputText;
+    
+    // Apply citation removal if checked
+    if (removeCitations) {
+      processedInput = removeCitationMarkers(processedInput);
+    }
+    
+    // Convert based on direction
+    if (isMarkdownToRich) {
+      const html = markdownToRichText(processedInput);
+      setOutputText(html);
+      document.getElementById("output-area").innerHTML = html;
+    } else {
+      const markdown = richTextToMarkdown(processedInput);
+      setOutputText(markdown);
+      document.getElementById("output-area").textContent = markdown;
+    }
+  };
+  
+  // Swap input and output
+  const handleSwap = () => {
+    if (isMarkdownToRich) {
+      // From markdown to rich, so output is HTML
+      const markdown = richTextToMarkdown(document.getElementById("output-area").innerHTML);
+      setInputText(markdown);
+      document.getElementById("output-area").innerHTML = "";
+    } else {
+      // From rich to markdown, so output is markdown
+      const html = markdownToRichText(outputText);
+      setInputText(outputText);
+      document.getElementById("output-area").innerHTML = html;
+    }
+    setOutputText("");
+  };
+  
+  // Copy to clipboard
+  const handleCopy = () => {
+    let contentToCopy;
+    const outputArea = document.getElementById("output-area");
+    
+    if (isMarkdownToRich) {
+      // If converting to rich text
+      contentToCopy = plainFormatting ? outputArea.innerText : outputArea.innerHTML;
+    } else {
+      // If converting to markdown
+      contentToCopy = outputArea.textContent;
+    }
+    
+    navigator.clipboard.writeText(contentToCopy)
+      .then(() => {
+        const copyBtn = document.getElementById("copy-btn");
+        const originalText = copyBtn.textContent;
+        copyBtn.textContent = "Copied!";
+        setTimeout(() => {
+          copyBtn.textContent = originalText;
+        }, 2000);
+      })
+      .catch(err => {
+        console.error('Failed to copy: ', err);
+      });
+  };
+  
+  // Handle input click (clear)
   const handleInputClick = () => {
-    setInputText("");
+    // Only clear if it's the placeholder or first interaction
+    if (inputText === "") {
+      setInputText("");
+    }
   };
 
   return (
@@ -14,7 +98,7 @@ const Index = () => {
       <header className="relative z-10 flex flex-col items-center p-4 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
         {/* Central title */}
         <div className="text-center mb-4">
-          <h1 className="font-handwriting text-4xl mb-1 text-accent-primary">ChatGPT Cleaner</h1>
+          <h1 className="font-caveat text-4xl mb-1 text-accent-primary">ChatGPT Cleaner</h1>
           <p className="subtitle">Convert between markdown and rich text with ease</p>
         </div>
         
@@ -36,48 +120,95 @@ const Index = () => {
 
       <div className="conversion-controls">
         <div className="direction-toggle">
-          <input type="radio" id="md-to-rich" name="direction" value="md-to-rich" defaultChecked />
+          <input 
+            type="radio" 
+            id="md-to-rich" 
+            name="direction" 
+            value="md-to-rich" 
+            checked={isMarkdownToRich}
+            onChange={handleDirectionChange} 
+          />
           <label htmlFor="md-to-rich">Markdown → Rich Text</label>
-          <input type="radio" id="rich-to-md" name="direction" value="rich-to-md" />
+          <input 
+            type="radio" 
+            id="rich-to-md" 
+            name="direction" 
+            value="rich-to-md" 
+            checked={!isMarkdownToRich}
+            onChange={handleDirectionChange} 
+          />
           <label htmlFor="rich-to-md">Rich Text → Markdown</label>
         </div>
         
         <div className="options">
-          <input type="checkbox" id="remove-citations" name="remove-citations" />
+          <input 
+            type="checkbox" 
+            id="remove-citations" 
+            name="remove-citations" 
+            checked={removeCitations}
+            onChange={(e) => setRemoveCitations(e.target.checked)}
+          />
           <label htmlFor="remove-citations">Remove Citations</label>
           
-          <input type="checkbox" id="plain-formatting" name="plain-formatting" />
+          <input 
+            type="checkbox" 
+            id="plain-formatting" 
+            name="plain-formatting"
+            checked={plainFormatting}
+            onChange={(e) => setPlainFormatting(e.target.checked)}
+          />
           <label htmlFor="plain-formatting">Plain Text Output</label>
         </div>
       </div>
 
       <div className="editor-container">
         <div className="editor-panel">
-          <h2 id="input-label">AI Text Input</h2>
+          <h2 id="input-label">{isMarkdownToRich ? 'Markdown Input' : 'Rich Text Input'}</h2>
           <div className="editor-wrapper">
             <textarea 
               id="input-area" 
               value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
+              onChange={handleInputChange}
               onClick={handleInputClick}
-              placeholder="Paste your markdown text here..."
+              placeholder={isMarkdownToRich ? "Paste your markdown text here..." : "Paste your rich text here..."}
             ></textarea>
           </div>
         </div>
         
         <div className="actions">
-          <button id="convert-btn" className="primary-btn">Convert</button>
-          <button id="swap-btn" className="icon-btn" title="Swap input/output">
+          <button 
+            id="convert-btn" 
+            className="primary-btn"
+            onClick={handleConvert}
+          >
+            Convert
+          </button>
+          <button 
+            id="swap-btn" 
+            className="icon-btn" 
+            title="Swap input/output"
+            onClick={handleSwap}
+          >
             <ArrowRightLeft size={18} />
           </button>
         </div>
         
         <div className="editor-panel">
-          <h2 id="output-label">Rich Text Output</h2>
+          <h2 id="output-label">{isMarkdownToRich ? 'Rich Text Output' : 'Markdown Output'}</h2>
           <div className="editor-wrapper">
-            <div id="output-area" className="rich-editor" contentEditable="true"></div>
+            <div 
+              id="output-area" 
+              className="rich-editor" 
+              contentEditable={isMarkdownToRich}
+            ></div>
           </div>
-          <button id="copy-btn" className="secondary-btn">Copy to Clipboard</button>
+          <button 
+            id="copy-btn" 
+            className="secondary-btn"
+            onClick={handleCopy}
+          >
+            Copy to Clipboard
+          </button>
         </div>
       </div>
       
