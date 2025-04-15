@@ -1,76 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { useVisitTracker } from "@/hooks/use-visit-tracker";
-import { useAuth } from "@/contexts/AuthContext";
+
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
-import { toast } from "@/hooks/use-toast";
-import { Bookmark, LogIn, UserPlus } from "lucide-react";
+import { Bookmark } from "lucide-react";
 
 const Index = () => {
-  const { isFirstVisit, isLoading, shouldPromptSignup, trackInputClick } = useVisitTracker();
-  const { user, signOut } = useAuth();
-  const navigate = useNavigate();
   const [inputText, setInputText] = useState("");
   
-  useEffect(() => {
-    if (shouldPromptSignup) {
-      toast({
-        title: "Whoa cowboy!",
-        description: "Create a free account to continue using this tool for free.",
-        variant: "destructive",
-        duration: 5000,
-      });
-    }
-  }, [shouldPromptSignup]);
-
   const handleInputClick = () => {
     setInputText("");
-    trackInputClick();
   };
 
   return (
     <div className="app-container">
       <header className="relative z-10 flex flex-col items-center p-4 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
         {/* Central title */}
-        <div className="text-center mb-2">
-          <h1>ChatGPT Cleaner</h1>
+        <div className="text-center mb-4">
+          <h1 className="font-handwriting text-4xl mb-1">ChatGPT Cleaner</h1>
           <p className="subtitle">Convert between markdown and rich text with ease</p>
-        </div>
-        
-        {/* Auth buttons - IMPORTANT: Making them more visible with clear styling */}
-        <div className="w-full flex justify-center my-4">
-          {user ? (
-            <div className="auth-controls flex items-center gap-3 p-3 bg-gray-100 dark:bg-gray-800 rounded-md shadow-sm border border-gray-200 dark:border-gray-700">
-              <span className="user-email text-sm font-medium">{user.email}</span>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={signOut}
-                className="border-red-300 text-red-600 hover:bg-red-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-900/20"
-              >
-                Sign Out
-              </Button>
-            </div>
-          ) : (
-            <div className="auth-buttons flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-md shadow-sm border border-blue-100 dark:border-blue-900">
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={() => navigate('/auth')} 
-                className="flex items-center gap-1 border border-blue-300 hover:bg-blue-50 dark:border-blue-700 dark:hover:bg-blue-900/30"
-              >
-                <LogIn className="h-4 w-4" /> Sign In
-              </Button>
-              <Button 
-                variant="default" 
-                size="sm" 
-                onClick={() => navigate('/auth?tab=signup')} 
-                className="flex items-center gap-1 bg-blue-600 hover:bg-blue-700 text-white"
-              >
-                <UserPlus className="h-4 w-4" /> Sign Up
-              </Button>
-            </div>
-          )}
         </div>
         
         <p className="bookmark-text flex items-center gap-1 text-sm text-gray-600 mt-1">
@@ -158,14 +104,6 @@ const Index = () => {
       
       <footer className="mt-8 pb-8">
         <p>Perfect for cleaning and formatting ChatGPT outputs</p>
-        {!user && (
-          <Button 
-            onClick={() => navigate('/auth')} 
-            className="mt-4 py-2 px-6 bg-blue-600 hover:bg-blue-700 text-white font-medium text-base shadow-md"
-          >
-            Sign In / Create Account
-          </Button>
-        )}
       </footer>
     </div>
   );
