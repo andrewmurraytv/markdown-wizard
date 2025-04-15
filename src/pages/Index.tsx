@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Bookmark, ArrowRightLeft } from "lucide-react";
 import { markdownToRichText, richTextToMarkdown, removeCitationMarkers } from "../utils/conversion";
@@ -185,11 +184,14 @@ const Index = () => {
           </button>
           <button 
             id="swap-btn" 
-            className="icon-btn" 
+            className="icon-btn group" 
             title="Swap input/output"
             onClick={handleSwap}
           >
-            <ArrowRightLeft size={18} />
+            <ArrowRightLeft 
+              size={24} 
+              className="group-hover:rotate-180 transition-transform duration-300" 
+            />
           </button>
         </div>
         
