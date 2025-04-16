@@ -274,20 +274,27 @@ h1 {
   position: relative;
   width: 100%;
   justify-content: center;
+  background-color: var(--bg-secondary);
+  padding: 0.5rem;
+  border-radius: var(--radius);
+  margin: 0.5rem 0;
+  border: 1px solid var(--border-color);
 }
 
 .swap-btn {
   position: relative;
   width: 40px;
   height: 40px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   border: 1px solid var(--accent-primary);
   transition: all 0.3s ease;
+  background-color: #f0f7ff; /* Light blue background for visibility */
 }
 
 .swap-btn:hover {
   transform: scale(1.1);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  background-color: #e0f0ff; /* Slightly darker blue on hover */
 }
 
 .primary-btn, .secondary-btn, .icon-btn {
@@ -396,11 +403,13 @@ footer {
     justify-content: center;
     margin: 1rem 0;
     position: static;
+    flex-wrap: wrap;
   }
   
   .conversion-direction {
     transform: rotate(90deg);
-    margin: 0 0.5rem;
+    margin: 0 1rem;
+    width: auto;
   }
   
   .conversion-controls {
