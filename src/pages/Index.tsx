@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/conversion/Header";
@@ -85,7 +84,16 @@ const Index = () => {
         />
       </div>
       
-      <FeaturesSection />
+      <FeaturesSection additionalFeatures={[
+        {
+          title: "Clean Perplexity Research",
+          description: "Quickly convert Perplexity real-time research to rich-text format."
+        },
+        {
+          title: "Claude Companion",
+          description: "Convert your Claude AI chats to Rich-Text easily for free."
+        }
+      ]} />
       <Footer />
     </div>
   );
