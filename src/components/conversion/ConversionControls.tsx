@@ -5,8 +5,6 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 
 interface ConversionControlsProps {
-  isMarkdownToRich: boolean;
-  setIsMarkdownToRich: (value: boolean) => void;
   removeCitations: boolean;
   setRemoveCitations: (value: boolean) => void;
   plainFormatting: boolean;
@@ -14,39 +12,14 @@ interface ConversionControlsProps {
 }
 
 const ConversionControls = ({
-  isMarkdownToRich,
-  setIsMarkdownToRich,
   removeCitations,
   setRemoveCitations,
   plainFormatting,
   setPlainFormatting
 }: ConversionControlsProps) => {
-  const handleDirectionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsMarkdownToRich(e.target.id === "md-to-rich");
-  };
-
   return (
     <div className="conversion-controls">
-      <div className="direction-toggle">
-        <input 
-          type="radio" 
-          id="md-to-rich" 
-          name="direction" 
-          value="md-to-rich" 
-          checked={isMarkdownToRich}
-          onChange={handleDirectionChange} 
-        />
-        <label htmlFor="md-to-rich">Markdown → Rich Text</label>
-        <input 
-          type="radio" 
-          id="rich-to-md" 
-          name="direction" 
-          value="rich-to-md" 
-          checked={!isMarkdownToRich}
-          onChange={handleDirectionChange} 
-        />
-        <label htmlFor="rich-to-md">Rich Text → Markdown</label>
-      </div>
+      <h3 className="text-lg font-medium">Rich Text → Markdown</h3>
       
       <div className="options">
         <input 

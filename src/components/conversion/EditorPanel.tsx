@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 interface EditorPanelProps {
   title: string;
   isInput: boolean;
-  isMarkdownToRich: boolean;
   contentEditable?: boolean;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
@@ -17,7 +16,6 @@ interface EditorPanelProps {
 const EditorPanel = ({
   title,
   isInput,
-  isMarkdownToRich,
   contentEditable,
   value,
   onChange,
@@ -35,7 +33,7 @@ const EditorPanel = ({
             value={value}
             onChange={onChange}
             onClick={onClick}
-            placeholder={isMarkdownToRich ? "Paste your markdown text here..." : "Paste your rich text here..."}
+            placeholder="Paste your rich text here..."
           ></textarea>
         ) : (
           <div 

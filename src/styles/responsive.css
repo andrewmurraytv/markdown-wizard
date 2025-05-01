@@ -1,0 +1,35 @@
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 1rem;
+  }
+  
+  .editor-container {
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+      "input"
+      "actions"
+      "output";
+  }
+  
+  .actions {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+    position: static;
+    flex-wrap: wrap;
+  }
+  
+  .conversion-direction {
+    transform: rotate(90deg);
+    margin: 0 1rem;
+    width: auto;
+  }
+  
+  .conversion-controls {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

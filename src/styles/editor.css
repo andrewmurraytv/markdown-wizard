@@ -1,0 +1,42 @@
+
+.rich-editor h1, .rich-editor h2, .rich-editor h3, .rich-editor h4, .rich-editor h5, .rich-editor h6 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.rich-editor p {
+  margin-bottom: 1rem;
+}
+
+.rich-editor ul, .rich-editor ol {
+  padding-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+.rich-editor blockquote {
+  border-left: 4px solid var(--border-color);
+  padding-left: 1rem;
+  margin-left: 0;
+  margin-right: 0;
+  font-style: italic;
+}
+
+.rich-editor pre {
+  background-color: var(--bg-secondary);
+  padding: 1rem;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+.rich-editor code {
+  font-family: monospace;
+  background-color: var(--bg-secondary);
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+}
+
+.rich-editor pre code {
+  padding: 0;
+  background-color: transparent;
+}

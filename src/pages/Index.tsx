@@ -15,15 +15,12 @@ const Index = () => {
   const {
     inputText,
     outputText,
-    isMarkdownToRich,
-    setIsMarkdownToRich,
     removeCitations,
     setRemoveCitations,
     plainFormatting,
     setPlainFormatting,
     handleInputChange,
     handleConvert,
-    handleSwap,
     handleCopy,
     handleInputClick
   } = useConversion();
@@ -45,8 +42,6 @@ const Index = () => {
       />
 
       <ConversionControls 
-        isMarkdownToRich={isMarkdownToRich}
-        setIsMarkdownToRich={setIsMarkdownToRich}
         removeCitations={removeCitations}
         setRemoveCitations={setRemoveCitations}
         plainFormatting={plainFormatting}
@@ -55,9 +50,8 @@ const Index = () => {
 
       <div className="editor-container">
         <EditorPanel
-          title={isMarkdownToRich ? 'Markdown Input' : 'Rich Text Input'}
+          title='Rich Text Input'
           isInput={true}
-          isMarkdownToRich={isMarkdownToRich}
           value={inputText}
           onChange={handleInputChange}
           onClick={handleInputClick}
@@ -65,25 +59,15 @@ const Index = () => {
         />
         
         <div className="actions flex flex-col items-center">
-          <button 
-            id="convert-btn" 
-            className="primary-btn mb-4 w-36"
-            onClick={handleConvert}
-          >
-            Convert
-          </button>
-          
           <ConversionDirection 
-            isMarkdownToRich={isMarkdownToRich}
-            onSwap={handleSwap}
+            onConvert={handleConvert}
           />
         </div>
         
         <EditorPanel
-          title={isMarkdownToRich ? 'Rich Text Output' : 'Markdown Output'}
+          title='Markdown Output'
           isInput={false}
-          isMarkdownToRich={isMarkdownToRich}
-          contentEditable={isMarkdownToRich}
+          contentEditable={false}
           onCopy={handleCopy}
           id="output-area"
         />

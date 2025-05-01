@@ -1,0 +1,106 @@
+
+.conversion-direction {
+  position: relative;
+  width: 100%;
+  justify-content: center;
+  background-color: var(--bg-secondary);
+  padding: 0.5rem;
+  border-radius: var(--radius);
+  margin: 0.5rem 0;
+  border: 1px solid var(--border-color);
+}
+
+.swap-btn {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--accent-primary);
+  transition: all 0.3s ease;
+  background-color: #f0f7ff; /* Light blue background for visibility */
+}
+
+.swap-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  background-color: #e0f0ff; /* Slightly darker blue on hover */
+}
+
+.primary-btn, .secondary-btn, .icon-btn {
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.primary-btn {
+  background-color: var(--accent-primary);
+  color: white;
+}
+
+.primary-btn:hover {
+  background-color: var(--accent-secondary);
+}
+
+.primary-btn:active::after, 
+.secondary-btn:active::after, 
+.icon-btn:active::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  80% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+  }
+}
+
+.secondary-btn {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  margin: 1rem;
+  align-self: flex-end;
+}
+
+.secondary-btn:hover {
+  background-color: var(--border-color);
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.icon-btn:hover {
+  background-color: var(--border-color);
+}
