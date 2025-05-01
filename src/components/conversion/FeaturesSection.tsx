@@ -1,7 +1,16 @@
 
 import React from "react";
 
-const FeaturesSection = () => {
+interface FeatureProps {
+  title: string;
+  description: string;
+}
+
+interface FeaturesSectionProps {
+  additionalFeatures?: FeatureProps[];
+}
+
+const FeaturesSection = ({ additionalFeatures }: FeaturesSectionProps) => {
   return (
     <div className="features-section">
       <h2 className="text-2xl font-semibold mb-6">Features</h2>
@@ -23,6 +32,20 @@ const FeaturesSection = () => {
           <p>Easily format text from AI chatbots for your documents, emails, or websites.</p>
         </div>
       </div>
+      
+      {additionalFeatures && additionalFeatures.length > 0 && (
+        <>
+          <h3 className="additional-features-heading">AI-Specific Tools</h3>
+          <div className="additional-features-grid">
+            {additionalFeatures.map((feature, index) => (
+              <div key={index} className="additional-feature-card">
+                <h3 className="text-xl font-medium mb-2">{feature.title}</h3>
+                <p>{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };
