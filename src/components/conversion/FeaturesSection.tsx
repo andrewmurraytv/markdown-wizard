@@ -1,9 +1,12 @@
 
 import React from "react";
+import { MessageSquareCode, MessageSquarePlus, MessageSquareHeart } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface FeatureProps {
   title: string;
   description: string;
+  icon?: React.ReactNode;
 }
 
 interface FeaturesSectionProps {
@@ -11,41 +14,61 @@ interface FeaturesSectionProps {
 }
 
 const FeaturesSection = ({ additionalFeatures }: FeaturesSectionProps) => {
+  // Standard features with icons
+  const standardFeatures: FeatureProps[] = [
+    {
+      title: "Bidirectional Conversion",
+      description: "Convert from Markdown to Rich Text or Rich Text to Markdown with a single click.",
+      icon: <MessageSquareCode className="h-6 w-6 text-primary" />
+    },
+    {
+      title: "Citation Removal",
+      description: "Automatically strip citation markers like [1], [2,3] and remove source lists from academic or AI-generated texts.",
+      icon: <MessageSquarePlus className="h-6 w-6 text-primary" />
+    },
+    {
+      title: "Format Options",
+      description: "Choose between formatted rich text or clean plain text output for perfect pasting into any document.",
+      icon: <MessageSquareHeart className="h-6 w-6 text-primary" />
+    },
+    {
+      title: "Perfect for ChatGPT",
+      description: "Easily format text from AI chatbots for your documents, emails, or websites.",
+      icon: <MessageSquareCode className="h-6 w-6 text-primary" />
+    },
+    {
+      title: "Clean Perplexity Research",
+      description: "Quickly convert Perplexity real-time research to rich-text format.",
+      icon: <MessageSquarePlus className="h-6 w-6 text-primary" />
+    },
+    {
+      title: "Claude Companion",
+      description: "Convert your Claude AI chats to Rich-Text easily for free.",
+      icon: <MessageSquareHeart className="h-6 w-6 text-primary" />
+    }
+  ];
+
+  // Combine standard features with any additional features
+  const allFeatures = additionalFeatures 
+    ? [...standardFeatures, ...additionalFeatures]
+    : standardFeatures;
+
   return (
     <div className="features-section">
-      <h2 className="text-2xl font-semibold mb-6">Features</h2>
+      <h2 className="text-2xl font-semibold mb-6 text-center">Features</h2>
       <div className="features-grid">
-        <div className="feature-card">
-          <h3 className="text-xl font-medium mb-2">Bidirectional Conversion</h3>
-          <p>Convert from Markdown to Rich Text or Rich Text to Markdown with a single click.</p>
-        </div>
-        <div className="feature-card">
-          <h3 className="text-xl font-medium mb-2">Citation Removal</h3>
-          <p>Automatically strip citation markers like [1], [2,3] and remove source lists from academic or AI-generated texts.</p>
-        </div>
-        <div className="feature-card">
-          <h3 className="text-xl font-medium mb-2">Format Options</h3>
-          <p>Choose between formatted rich text or clean plain text output for perfect pasting into any document.</p>
-        </div>
-        <div className="feature-card">
-          <h3 className="text-xl font-medium mb-2">Perfect for ChatGPT</h3>
-          <p>Easily format text from AI chatbots for your documents, emails, or websites.</p>
-        </div>
+        {allFeatures.map((feature, index) => (
+          <Card key={index} className="feature-card hover:shadow-md transition-all">
+            <CardHeader className="flex flex-row items-center gap-3 pb-2">
+              {feature.icon}
+              <CardTitle className="text-xl">{feature.title}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">{feature.description}</p>
+            </CardContent>
+          </Card>
+        ))}
       </div>
-      
-      {additionalFeatures && additionalFeatures.length > 0 && (
-        <>
-          <h3 className="additional-features-heading">AI-Specific Tools</h3>
-          <div className="additional-features-grid">
-            {additionalFeatures.map((feature, index) => (
-              <div key={index} className="additional-feature-card">
-                <h3 className="text-xl font-medium mb-2">{feature.title}</h3>
-                <p>{feature.description}</p>
-              </div>
-            ))}
-          </div>
-        </>
-      )}
     </div>
   );
 };
