@@ -1,12 +1,15 @@
 
 import { useState, useEffect } from "react";
-import { richTextToMarkdown, removeCitationMarkers } from "../utils/conversion";
+import { richTextToMarkdown, markdownToRichText, removeCitationMarkers } from "../utils/conversion";
+
+export type ConversionDirection = "markdown-to-rich" | "rich-to-markdown";
 
 export const useConversion = () => {
   const [inputText, setInputText] = useState("");
   const [outputText, setOutputText] = useState("");
   const [removeCitations, setRemoveCitations] = useState(false);
   const [plainFormatting, setPlainFormatting] = useState(false);
+  const [direction, setDirection] = useState<ConversionDirection>("markdown-to-rich");
   
   // Handle input change
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -18,20 +21,29 @@ export const useConversion = () => {
     let processedInput = inputText;
     
     // Apply citation removal if checked
-    if (removeCitations) {
+    if (removeCitations && direction === "rich-to-markdown") {
       processedInput = removeCitationMarkers(processedInput);
     }
     
-    // Convert rich text to markdown
-    const markdown = richTextToMarkdown(processedInput);
-    setOutputText(markdown);
-    document.getElementById("output-area")!.textContent = markdown;
+    // Convert based on direction
+    let result = "";
+    if (direction === "markdown-to-rich") {
+      result = markdownToRichText(processedInput);
+      document.getElementById("output-area")!.innerHTML = result;
+    } else {
+      result = richTextToMarkdown(processedInput);
+      document.getElementById("output-area")!.textContent = result;
+    }
+    
+    setOutputText(result);
   };
   
   // Copy to clipboard
   const handleCopy = () => {
     const outputArea = document.getElementById("output-area")!;
-    const contentToCopy = outputArea.textContent || "";
+    const contentToCopy = direction === "markdown-to-rich" 
+      ? outputArea.innerHTML 
+      : outputArea.textContent || "";
     
     navigator.clipboard.writeText(contentToCopy)
       .then(() => {
@@ -64,6 +76,8 @@ export const useConversion = () => {
     setRemoveCitations,
     plainFormatting,
     setPlainFormatting,
+    direction,
+    setDirection,
     handleInputChange,
     handleConvert,
     handleCopy,

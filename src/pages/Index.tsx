@@ -5,6 +5,7 @@ import Header from "@/components/conversion/Header";
 import ConversionControls from "@/components/conversion/ConversionControls";
 import EditorPanel from "@/components/conversion/EditorPanel";
 import ConversionDirection from "@/components/conversion/ConversionDirection";
+import DirectionToggle from "@/components/conversion/DirectionToggle";
 import FeaturesSection from "@/components/conversion/FeaturesSection";
 import Footer from "@/components/conversion/Footer";
 import { useConversion } from "@/hooks/useConversion";
@@ -19,6 +20,8 @@ const Index = () => {
     setRemoveCitations,
     plainFormatting,
     setPlainFormatting,
+    direction,
+    setDirection,
     handleInputChange,
     handleConvert,
     handleCopy,
@@ -41,35 +44,44 @@ const Index = () => {
         onToggleTheme={handleThemeToggle}
       />
 
+      <DirectionToggle 
+        direction={direction}
+        setDirection={setDirection}
+      />
+
       <ConversionControls 
         removeCitations={removeCitations}
         setRemoveCitations={setRemoveCitations}
         plainFormatting={plainFormatting}
         setPlainFormatting={setPlainFormatting}
+        direction={direction}
       />
 
       <div className="editor-container">
         <EditorPanel
-          title='Rich Text Input'
+          title={direction === "markdown-to-rich" ? 'Markdown Input' : 'Rich Text Input'}
           isInput={true}
           value={inputText}
           onChange={handleInputChange}
           onClick={handleInputClick}
           id="input-area"
+          direction={direction}
         />
         
         <div className="actions flex flex-col items-center">
           <ConversionDirection 
             onConvert={handleConvert}
+            direction={direction}
           />
         </div>
         
         <EditorPanel
-          title='Markdown Output'
+          title={direction === "markdown-to-rich" ? 'Rich Text Output' : 'Markdown Output'}
           isInput={false}
-          contentEditable={false}
+          contentEditable={direction === "markdown-to-rich"}
           onCopy={handleCopy}
           id="output-area"
+          direction={direction}
         />
       </div>
       

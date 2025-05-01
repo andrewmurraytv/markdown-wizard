@@ -1,6 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
+import { ConversionDirection } from "@/hooks/useConversion";
 
 interface EditorPanelProps {
   title: string;
@@ -11,6 +12,7 @@ interface EditorPanelProps {
   onClick?: () => void;
   onCopy?: () => void;
   id: string;
+  direction: ConversionDirection;
 }
 
 const EditorPanel = ({
@@ -21,8 +23,11 @@ const EditorPanel = ({
   onChange,
   onClick,
   onCopy,
-  id
+  id,
+  direction
 }: EditorPanelProps) => {
+  const isMarkdownMode = (isInput && direction === "markdown-to-rich") || (!isInput && direction === "rich-to-markdown");
+  
   return (
     <div className="editor-panel">
       <h2 id={`${isInput ? 'input' : 'output'}-label`}>{title}</h2>
@@ -33,24 +38,25 @@ const EditorPanel = ({
             value={value}
             onChange={onChange}
             onClick={onClick}
-            placeholder="Paste your rich text here..."
+            placeholder={direction === "markdown-to-rich" ? "Paste your markdown text here..." : "Paste your rich text here..."}
           ></textarea>
         ) : (
           <div 
             id={id}
-            className="rich-editor" 
+            className={isMarkdownMode ? "rich-editor" : "rich-editor"}
             contentEditable={contentEditable}
           ></div>
         )}
       </div>
       {!isInput && onCopy && (
-        <button 
+        <Button 
           id="copy-btn" 
           className="secondary-btn"
           onClick={onCopy}
+          variant="outline"
         >
           Copy to Clipboard
-        </button>
+        </Button>
       )}
     </div>
   );

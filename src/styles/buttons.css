@@ -104,3 +104,11 @@
 .icon-btn:hover {
   background-color: var(--border-color);
 }
+
+.direction-toggle-container {
+  background-color: var(--bg-secondary);
+  padding: 1rem;
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow-sm);
+}
