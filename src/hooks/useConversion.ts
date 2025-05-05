@@ -32,7 +32,14 @@ export const useConversion = () => {
       const outputArea = document.getElementById("output-area");
       if (outputArea) outputArea.innerHTML = result;
     } else {
-      result = richTextToMarkdown(processedInput);
+      // For rich to markdown, check if the input might contain HTML
+      if (processedInput.includes('<') && processedInput.includes('>')) {
+        // Input appears to be HTML
+        result = richTextToMarkdown(processedInput);
+      } else {
+        // Plain text input, treat as HTML by wrapping in a div
+        result = richTextToMarkdown(`<div>${processedInput}</div>`);
+      }
       const outputArea = document.getElementById("output-area");
       if (outputArea) outputArea.textContent = result;
     }

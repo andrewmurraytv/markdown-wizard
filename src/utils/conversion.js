@@ -5,6 +5,16 @@ const turndownService = new TurndownService({
   codeBlockStyle: 'fenced'
 });
 
+// Configure turndownService to properly handle links
+turndownService.addRule('links', {
+  filter: 'a',
+  replacement: function(content, node) {
+    const href = node.getAttribute('href');
+    const title = node.title ? ` "${node.title}"` : '';
+    return href ? `[${content}](${href}${title})` : content;
+  }
+});
+
 // Initialize marked for Markdown to HTML conversion
 marked.setOptions({
   gfm: true,
@@ -60,5 +70,28 @@ export function cleanHtmlForCopy(html) {
 // Convert Rich Text (HTML) to Markdown
 export function richTextToMarkdown(html) {
   if (!html) return '';
-  return turndownService.turndown(html);
+  
+  // Wrap in try-catch to handle any potential conversion errors
+  try {
+    // Create a temporary div to normalize the HTML
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+    
+    // Process all links to ensure they're properly preserved
+    const links = tempDiv.querySelectorAll('a');
+    links.forEach(link => {
+      // Make sure href attribute is present
+      if (!link.getAttribute('href') && link.textContent) {
+        // If there's no href but it looks like a URL, use the text as the href
+        if (link.textContent.match(/^(https?:\/\/|www\.)/)) {
+          link.setAttribute('href', link.textContent);
+        }
+      }
+    });
+    
+    return turndownService.turndown(tempDiv.innerHTML);
+  } catch (error) {
+    console.error('Error converting rich text to markdown:', error);
+    return html; // Return original input if conversion fails
+  }
 }

@@ -1,48 +1,39 @@
 
 import React from "react";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ConversionDirection } from "@/hooks/useConversion";
 
 interface DirectionToggleProps {
-  direction: "markdown-to-rich" | "rich-to-markdown";
-  setDirection: (direction: "markdown-to-rich" | "rich-to-markdown") => void;
+  direction: ConversionDirection;
+  setDirection: (direction: ConversionDirection) => void;
 }
 
 const DirectionToggle = ({ direction, setDirection }: DirectionToggleProps) => {
+  const toggleDirection = (newDirection: ConversionDirection) => {
+    setDirection(newDirection);
+  };
+
   return (
-    <div className="direction-toggle-container mb-6">
-      <h3 className="text-lg font-medium mb-2">Conversion Direction:</h3>
-      <ToggleGroup 
-        type="single" 
-        variant="outline"
-        value={direction} 
-        onValueChange={(value) => {
-          if (value) setDirection(value as "markdown-to-rich" | "rich-to-markdown");
-        }}
-        className="w-full border border-border rounded-lg overflow-hidden"
-      >
-        <ToggleGroupItem 
-          value="markdown-to-rich" 
-          className="w-1/2 py-4 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
+    <div className="direction-toggle my-6">
+      <h2 className="text-center text-xl font-medium mb-4">What Do You Want To Convert?</h2>
+      
+      <div className="flex flex-wrap justify-center gap-2">
+        <Button
+          variant={direction === "markdown-to-rich" ? "default" : "outline"}
+          onClick={() => toggleDirection("markdown-to-rich")}
+          className="flex-1 max-w-xs"
         >
-          <div className="flex items-center justify-center">
-            <span className="font-medium">Markdown</span>
-            <ArrowRight size={18} className="mx-2" />
-            <span className="font-medium">Rich Text</span>
-          </div>
-        </ToggleGroupItem>
+          Markdown → Rich Text
+        </Button>
         
-        <ToggleGroupItem 
-          value="rich-to-markdown" 
-          className="w-1/2 py-4 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
+        <Button
+          variant={direction === "rich-to-markdown" ? "default" : "outline"}
+          onClick={() => toggleDirection("rich-to-markdown")}
+          className="flex-1 max-w-xs"
         >
-          <div className="flex items-center justify-center">
-            <span className="font-medium">Rich Text</span>
-            <ArrowRight size={18} className="mx-2" />
-            <span className="font-medium">Markdown</span>
-          </div>
-        </ToggleGroupItem>
-      </ToggleGroup>
+          Rich Text → Markdown
+        </Button>
+      </div>
     </div>
   );
 };

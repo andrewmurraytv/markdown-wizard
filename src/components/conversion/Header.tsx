@@ -16,9 +16,19 @@ const Header = ({ themeEnabled, onToggleTheme }: HeaderProps) => {
         <p className="subtitle">Convert between markdown and rich text with ease</p>
       </div>
       
-      <p className="bookmark-text flex items-center gap-1 text-sm text-gray-600 mt-1">
-        <Bookmark className="h-4 w-4" /> Bookmark this tool
-      </p>
+      <div className="relative">
+        <p className="bookmark-text flex items-center gap-1 text-sm text-gray-600 mt-1">
+          <Bookmark className="h-4 w-4" /> Bookmark this tool
+        </p>
+        
+        {/* Hand-drawn arrow pointing at bookmark text */}
+        <div className="absolute -right-16 -top-2">
+          <svg width="60" height="40" viewBox="0 0 60 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="transform rotate-12">
+            <path d="M5,20 Q20,5 30,25 T55,15" stroke="#ff3333" strokeWidth="2" strokeLinecap="round" fill="none" className="hand-drawn-arrow" />
+            <path d="M55,15 L48,10 M55,15 L50,20" stroke="#ff3333" strokeWidth="2" strokeLinecap="round" className="hand-drawn-arrow-head" />
+          </svg>
+        </div>
+      </div>
       
       {/* Theme toggle */}
       <div className="absolute right-4 top-4">
