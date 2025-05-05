@@ -1,6 +1,6 @@
 
 import React from "react";
-import { LucideIcon, Activity, BookOpen, RefreshCw, PencilRule, Copy, FileCode } from "lucide-react";
+import { LucideIcon, Activity, BookOpen, RefreshCw, PencilRuler, Copy, FileCode } from "lucide-react";
 
 // Added AI service icons
 interface FeatureProps {
@@ -37,7 +37,7 @@ const FeaturesSection = () => {
     {
       title: "Format Preservation",
       description: "Maintain your text formatting during conversion between formats.",
-      icon: PencilRule
+      icon: PencilRuler
     },
     {
       title: "Copy to Clipboard",
