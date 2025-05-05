@@ -37,7 +37,7 @@ export function removeCitationMarkers(text) {
     cleaned = cleaned.replace(pattern, '');
   }
   
-  return cleaned;
+  return cleaned.trim();
 }
 
 // Convert Markdown to Rich Text (HTML)

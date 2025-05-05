@@ -26,15 +26,16 @@ const ConversionControls = ({
         {direction === "markdown-to-rich" ? "Markdown → Rich Text" : "Rich Text → Markdown"}
       </h3>
       
-      <div className="options space-y-4">
+      <div className="space-y-4">
         <div className="flex items-center space-x-2">
           <Checkbox 
             id="remove-citations" 
             checked={removeCitations}
             onCheckedChange={(checked) => setRemoveCitations(checked === true)}
-            disabled={direction === "markdown-to-rich"}
           />
-          <Label htmlFor="remove-citations">Remove Citations</Label>
+          <Label htmlFor="remove-citations" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            Remove Citations
+          </Label>
         </div>
         
         <div className="flex items-center space-x-2">
@@ -43,7 +44,9 @@ const ConversionControls = ({
             checked={plainFormatting}
             onCheckedChange={(checked) => setPlainFormatting(checked === true)}
           />
-          <Label htmlFor="plain-formatting">Plain Text Output</Label>
+          <Label htmlFor="plain-formatting" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            Plain Text Output
+          </Label>
         </div>
       </div>
     </div>

@@ -20,8 +20,8 @@ export const useConversion = () => {
   const handleConvert = () => {
     let processedInput = inputText;
     
-    // Apply citation removal if checked and in rich-to-markdown mode
-    if (removeCitations && direction === "rich-to-markdown") {
+    // Apply citation removal if checked (for both conversion directions)
+    if (removeCitations) {
       processedInput = removeCitationMarkers(processedInput);
     }
     
