@@ -11,6 +11,7 @@ interface EditorPanelProps {
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onClick?: () => void;
   onCopy?: () => void;
+  onPaste?: (e: React.ClipboardEvent) => void;
   id: string;
   direction: ConversionDirection;
 }
@@ -23,6 +24,7 @@ const EditorPanel = ({
   onChange,
   onClick,
   onCopy,
+  onPaste,
   id,
   direction
 }: EditorPanelProps) => {
@@ -38,6 +40,7 @@ const EditorPanel = ({
             value={value}
             onChange={onChange}
             onClick={onClick}
+            onPaste={onPaste}
             placeholder={direction === "markdown-to-rich" ? "Paste your markdown text here..." : "Paste your rich text here..."}
           ></textarea>
         ) : (

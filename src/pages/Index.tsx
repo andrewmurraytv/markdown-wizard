@@ -25,7 +25,8 @@ const Index = () => {
     handleInputChange,
     handleConvert,
     handleCopy,
-    handleInputClick
+    handleInputClick,
+    handlePaste
   } = useConversion();
   
   const handleThemeToggle = (enabled: boolean) => {
@@ -64,6 +65,7 @@ const Index = () => {
           value={inputText}
           onChange={handleInputChange}
           onClick={handleInputClick}
+          onPaste={handlePaste}
           id="input-area"
           direction={direction}
         />

@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { richTextToMarkdown, markdownToRichText, removeCitationMarkers } from "../utils/conversion";
+import { richTextToMarkdown, markdownToRichText, removeCitationMarkers, isHTML } from "../utils/conversion";
 
 export type ConversionDirection = "markdown-to-rich" | "rich-to-markdown";
 
@@ -32,14 +32,23 @@ export const useConversion = () => {
       const outputArea = document.getElementById("output-area");
       if (outputArea) outputArea.innerHTML = result;
     } else {
-      // For rich to markdown, check if the input might contain HTML
-      if (processedInput.includes('<') && processedInput.includes('>')) {
+      // For rich to markdown conversion
+      // First check if the input contains HTML
+      if (isHTML(processedInput)) {
         // Input appears to be HTML
         result = richTextToMarkdown(processedInput);
       } else {
-        // Plain text input, treat as HTML by wrapping in a div
-        result = richTextToMarkdown(`<div>${processedInput}</div>`);
+        // Try to get content from the input textarea (might be html that was pasted)
+        const inputArea = document.getElementById("input-area");
+        if (inputArea && inputArea.innerHTML !== inputArea.textContent) {
+          // The input area has HTML content
+          result = richTextToMarkdown(inputArea.innerHTML);
+        } else {
+          // Plain text input, treat as HTML by wrapping in a div
+          result = richTextToMarkdown(`<div>${processedInput}</div>`);
+        }
       }
+      
       const outputArea = document.getElementById("output-area");
       if (outputArea) outputArea.textContent = result;
     }
@@ -84,6 +93,19 @@ export const useConversion = () => {
     }
   };
 
+  // Handle paste events for rich text detection
+  const handlePaste = (e: React.ClipboardEvent) => {
+    if (direction === "rich-to-markdown") {
+      const clipboardData = e.clipboardData;
+      if (clipboardData.types.includes('text/html')) {
+        // Get HTML content from clipboard
+        const htmlContent = clipboardData.getData('text/html');
+        // This is handled by the browser's default paste behavior
+        console.log("HTML content detected in clipboard");
+      }
+    }
+  };
+
   return {
     inputText,
     setInputText,
@@ -98,6 +120,7 @@ export const useConversion = () => {
     handleInputChange,
     handleConvert,
     handleCopy,
-    handleInputClick
+    handleInputClick,
+    handlePaste
   };
 };

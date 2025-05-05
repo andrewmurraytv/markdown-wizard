@@ -15,6 +15,15 @@ turndownService.addRule('links', {
   }
 });
 
+// Add special rule for headings
+turndownService.addRule('headings', {
+  filter: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+  replacement: function(content, node) {
+    const level = Number(node.nodeName.charAt(1));
+    return `\n${'#'.repeat(level)} ${content}\n`;
+  }
+});
+
 // Initialize marked for Markdown to HTML conversion
 marked.setOptions({
   gfm: true,
@@ -67,29 +76,45 @@ export function cleanHtmlForCopy(html) {
   return tempDiv.innerText;
 }
 
+// Detect if input might be HTML
+export function isHTML(text) {
+  // Check for common HTML tags
+  const htmlRegex = /<([a-z][a-z0-9]*)\b[^>]*>(.*?)<\/\1>/i;
+  return htmlRegex.test(text);
+}
+
+// Prepare HTML content for conversion
+export function prepareHTMLForConversion(html) {
+  // Create a temporary div to normalize and clean up HTML
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = html;
+  
+  // Process all links to ensure they're properly preserved
+  const links = tempDiv.querySelectorAll('a');
+  links.forEach(link => {
+    // Make sure href attribute is present
+    if (!link.getAttribute('href') && link.textContent) {
+      // If there's no href but it looks like a URL, use the text as the href
+      if (link.textContent.match(/^(https?:\/\/|www\.)/)) {
+        link.setAttribute('href', link.textContent);
+      }
+    }
+  });
+  
+  return tempDiv.innerHTML;
+}
+
 // Convert Rich Text (HTML) to Markdown
 export function richTextToMarkdown(html) {
   if (!html) return '';
   
   // Wrap in try-catch to handle any potential conversion errors
   try {
-    // Create a temporary div to normalize the HTML
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = html;
+    // Prepare HTML for better conversion
+    const preparedHTML = prepareHTMLForConversion(html);
     
-    // Process all links to ensure they're properly preserved
-    const links = tempDiv.querySelectorAll('a');
-    links.forEach(link => {
-      // Make sure href attribute is present
-      if (!link.getAttribute('href') && link.textContent) {
-        // If there's no href but it looks like a URL, use the text as the href
-        if (link.textContent.match(/^(https?:\/\/|www\.)/)) {
-          link.setAttribute('href', link.textContent);
-        }
-      }
-    });
-    
-    return turndownService.turndown(tempDiv.innerHTML);
+    // Use TurndownService to convert HTML to Markdown
+    return turndownService.turndown(preparedHTML);
   } catch (error) {
     console.error('Error converting rich text to markdown:', error);
     return html; // Return original input if conversion fails
