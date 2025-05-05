@@ -47,6 +47,13 @@
   font-size: 0.875rem;
 }
 
+/* Added styling for feature logos */
+.feature-logo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
 /* Responsive adjustments for features */
 @media (max-width: 768px) {
   .features-grid {
