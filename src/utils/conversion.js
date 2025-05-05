@@ -1,5 +1,4 @@
 
-
 // Initialize TurndownService for HTML to Markdown conversion
 const turndownService = new TurndownService({
   headingStyle: 'atx',
@@ -15,6 +14,8 @@ marked.setOptions({
 
 // Remove citations like [1], [2,3], etc. and citation lists at the end
 export function removeCitationMarkers(text) {
+  if (!text) return '';
+  
   // Remove citation markers like [1], [2,3], [4-6], etc.
   let cleaned = text.replace(/\[\d+(?:[-,]\d+)*\]/g, '');
   
@@ -41,11 +42,14 @@ export function removeCitationMarkers(text) {
 
 // Convert Markdown to Rich Text (HTML)
 export function markdownToRichText(markdown) {
+  if (!markdown) return '';
   return marked.parse(markdown);
 }
 
 // Cleans HTML for better copy-paste experience
 export function cleanHtmlForCopy(html) {
+  if (!html) return '';
+  
   // Create a temporary div to work with the HTML
   const tempDiv = document.createElement('div');
   tempDiv.innerHTML = html;
@@ -55,6 +59,6 @@ export function cleanHtmlForCopy(html) {
 
 // Convert Rich Text (HTML) to Markdown
 export function richTextToMarkdown(html) {
+  if (!html) return '';
   return turndownService.turndown(html);
 }
-

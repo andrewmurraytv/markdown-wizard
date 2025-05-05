@@ -20,7 +20,7 @@ export const useConversion = () => {
   const handleConvert = () => {
     let processedInput = inputText;
     
-    // Apply citation removal if checked
+    // Apply citation removal if checked and in rich-to-markdown mode
     if (removeCitations && direction === "rich-to-markdown") {
       processedInput = removeCitationMarkers(processedInput);
     }
@@ -29,10 +29,12 @@ export const useConversion = () => {
     let result = "";
     if (direction === "markdown-to-rich") {
       result = markdownToRichText(processedInput);
-      document.getElementById("output-area")!.innerHTML = result;
+      const outputArea = document.getElementById("output-area");
+      if (outputArea) outputArea.innerHTML = result;
     } else {
       result = richTextToMarkdown(processedInput);
-      document.getElementById("output-area")!.textContent = result;
+      const outputArea = document.getElementById("output-area");
+      if (outputArea) outputArea.textContent = result;
     }
     
     setOutputText(result);
@@ -40,19 +42,27 @@ export const useConversion = () => {
   
   // Copy to clipboard
   const handleCopy = () => {
-    const outputArea = document.getElementById("output-area")!;
-    const contentToCopy = direction === "markdown-to-rich" 
-      ? outputArea.innerHTML 
-      : outputArea.textContent || "";
+    const outputArea = document.getElementById("output-area");
+    if (!outputArea) return;
+    
+    let contentToCopy = "";
+    
+    if (direction === "markdown-to-rich") {
+      contentToCopy = plainFormatting ? (outputArea.textContent || "") : outputArea.innerHTML;
+    } else {
+      contentToCopy = outputArea.textContent || "";
+    }
     
     navigator.clipboard.writeText(contentToCopy)
       .then(() => {
-        const copyBtn = document.getElementById("copy-btn")!;
-        const originalText = copyBtn.textContent;
-        copyBtn.textContent = "Copied!";
-        setTimeout(() => {
-          copyBtn.textContent = originalText;
-        }, 2000);
+        const copyBtn = document.getElementById("copy-btn");
+        if (copyBtn) {
+          const originalText = copyBtn.textContent;
+          copyBtn.textContent = "Copied!";
+          setTimeout(() => {
+            copyBtn.textContent = originalText;
+          }, 2000);
+        }
       })
       .catch(err => {
         console.error('Failed to copy: ', err);
