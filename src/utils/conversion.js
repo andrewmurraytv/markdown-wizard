@@ -2,7 +2,8 @@
 // Initialize TurndownService for HTML to Markdown conversion
 const turndownService = new TurndownService({
   headingStyle: 'atx',
-  codeBlockStyle: 'fenced'
+  codeBlockStyle: 'fenced',
+  linkStyle: 'inlined'
 });
 
 // Configure turndownService to properly handle links
@@ -78,13 +79,20 @@ export function cleanHtmlForCopy(html) {
 
 // Detect if input might be HTML
 export function isHTML(text) {
-  // Check for common HTML tags
+  if (!text) return false;
+  
+  // More comprehensive HTML detection
   const htmlRegex = /<([a-z][a-z0-9]*)\b[^>]*>(.*?)<\/\1>/i;
-  return htmlRegex.test(text);
+  const containsTags = /<[a-z][\s\S]*>/i.test(text);
+  const hasCommonTags = /<(div|span|p|a|h[1-6]|ul|ol|li|table|img)[\s>]/i.test(text);
+  
+  return htmlRegex.test(text) || (containsTags && hasCommonTags);
 }
 
 // Prepare HTML content for conversion
 export function prepareHTMLForConversion(html) {
+  if (!html) return '';
+  
   // Create a temporary div to normalize and clean up HTML
   const tempDiv = document.createElement('div');
   tempDiv.innerHTML = html;
@@ -101,6 +109,15 @@ export function prepareHTMLForConversion(html) {
     }
   });
   
+  // Ensure headings are properly formatted
+  const headings = tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6');
+  headings.forEach(heading => {
+    if (!heading.textContent.trim()) {
+      // Add placeholder text for empty headings
+      heading.textContent = 'Heading';
+    }
+  });
+  
   return tempDiv.innerHTML;
 }
 
@@ -113,8 +130,14 @@ export function richTextToMarkdown(html) {
     // Prepare HTML for better conversion
     const preparedHTML = prepareHTMLForConversion(html);
     
+    // Log for debugging
+    console.log('Converting HTML to Markdown:', preparedHTML);
+    
     // Use TurndownService to convert HTML to Markdown
-    return turndownService.turndown(preparedHTML);
+    const markdown = turndownService.turndown(preparedHTML);
+    
+    console.log('Converted to Markdown:', markdown);
+    return markdown;
   } catch (error) {
     console.error('Error converting rich text to markdown:', error);
     return html; // Return original input if conversion fails

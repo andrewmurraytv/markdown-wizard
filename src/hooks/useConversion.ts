@@ -1,6 +1,6 @@
 
-import { useState, useEffect } from "react";
-import { richTextToMarkdown, markdownToRichText, removeCitationMarkers, isHTML } from "../utils/conversion";
+import { useState, useEffect, useRef } from "react";
+import { richTextToMarkdown, markdownToRichText, removeCitationMarkers, isHTML, prepareHTMLForConversion } from "../utils/conversion";
 
 export type ConversionDirection = "markdown-to-rich" | "rich-to-markdown";
 
@@ -10,6 +10,10 @@ export const useConversion = () => {
   const [removeCitations, setRemoveCitations] = useState(false);
   const [plainFormatting, setPlainFormatting] = useState(false);
   const [direction, setDirection] = useState<ConversionDirection>("markdown-to-rich");
+  const [htmlInput, setHtmlInput] = useState<string | null>(null);
+  
+  // Store the raw HTML from paste events
+  const pastedHtmlRef = useRef<string | null>(null);
   
   // Handle input change
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -33,17 +37,18 @@ export const useConversion = () => {
       if (outputArea) outputArea.innerHTML = result;
     } else {
       // For rich to markdown conversion
-      // First check if the input contains HTML
-      if (isHTML(processedInput)) {
+      if (pastedHtmlRef.current) {
+        // We have pasted HTML content, use that directly
+        let htmlToConvert = pastedHtmlRef.current;
+        result = richTextToMarkdown(htmlToConvert);
+        pastedHtmlRef.current = null; // Clear after using
+      } else if (isHTML(processedInput)) {
         // Input appears to be HTML
         result = richTextToMarkdown(processedInput);
       } else {
         // Try to get content from the input textarea (might be html that was pasted)
         const inputArea = document.getElementById("input-area");
-        if (inputArea && inputArea.innerHTML !== inputArea.textContent) {
-          // The input area has HTML content
-          result = richTextToMarkdown(inputArea.innerHTML);
-        } else {
+        if (inputArea instanceof HTMLTextAreaElement) {
           // Plain text input, treat as HTML by wrapping in a div
           result = richTextToMarkdown(`<div>${processedInput}</div>`);
         }
@@ -97,11 +102,12 @@ export const useConversion = () => {
   const handlePaste = (e: React.ClipboardEvent) => {
     if (direction === "rich-to-markdown") {
       const clipboardData = e.clipboardData;
+      
+      // Check if there's HTML content in the clipboard
       if (clipboardData.types.includes('text/html')) {
-        // Get HTML content from clipboard
-        const htmlContent = clipboardData.getData('text/html');
-        // This is handled by the browser's default paste behavior
-        console.log("HTML content detected in clipboard");
+        // Store the HTML content for later use during conversion
+        pastedHtmlRef.current = clipboardData.getData('text/html');
+        console.log("HTML content captured from clipboard", pastedHtmlRef.current);
       }
     }
   };

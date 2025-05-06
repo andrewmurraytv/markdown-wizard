@@ -20,14 +20,6 @@ const Header = ({ themeEnabled, onToggleTheme }: HeaderProps) => {
         <p className="bookmark-text flex items-center gap-1 text-sm text-gray-600 mt-1">
           <Bookmark className="h-4 w-4" /> Bookmark this tool
         </p>
-        
-        {/* Hand-drawn arrow pointing at bookmark text - now more playful */}
-        <div className="absolute -right-32 -top-8">
-          <svg width="120" height="100" viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="transform rotate-0">
-            <path d="M10,60 C30,10 80,80 100,40" stroke="#ff0000" strokeWidth="8" strokeLinecap="round" fill="none" className="hand-drawn-arrow" />
-            <path d="M100,40 L110,60 M100,40 L80,45" stroke="#ff0000" strokeWidth="8" strokeLinecap="round" className="hand-drawn-arrow-head" />
-          </svg>
-        </div>
       </div>
       
       {/* Theme toggle */}
