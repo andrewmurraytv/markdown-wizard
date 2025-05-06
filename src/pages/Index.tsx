@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/conversion/Header";
 import ConversionControls from "@/components/conversion/ConversionControls";
@@ -28,13 +28,25 @@ const Index = () => {
     handleInputClick,
     handlePaste
   } = useConversion();
+
+  // Add effect to update theme
+  useEffect(() => {
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      setThemeEnabled(true);
+      document.body.setAttribute('data-theme', 'dark');
+    }
+  }, []);
   
   const handleThemeToggle = (enabled: boolean) => {
     setThemeEnabled(enabled);
     if (enabled) {
       document.body.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
     } else {
       document.body.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
     }
   };
 

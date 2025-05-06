@@ -32,7 +32,7 @@ const EditorPanel = ({
   const isMarkdownMode = (isInput && direction === "markdown-to-rich") || (!isInput && direction === "rich-to-markdown");
   const divRef = useRef<HTMLDivElement>(null);
   
-  // Effect to handle direct paste events in contentEditable div
+  // Effect to handle direct paste events and display in content editable div
   useEffect(() => {
     if (!isInput && divRef.current && direction === "markdown-to-rich") {
       const div = divRef.current;
@@ -44,11 +44,48 @@ const EditorPanel = ({
     }
   }, [isInput, value, direction]);
 
+  // Effect to style links in rich text input
+  useEffect(() => {
+    if (isInput && direction === "rich-to-markdown" && divRef.current) {
+      const div = divRef.current;
+      
+      // Highlight links with a distinct color and styling
+      const highlightLinks = () => {
+        const links = div.querySelectorAll('a');
+        links.forEach(link => {
+          link.style.color = '#8B5CF6'; // Vivid purple color
+          link.style.textDecoration = 'underline';
+          link.style.fontWeight = 'bold';
+        });
+        
+        // Highlight headings with a distinct styling
+        const headings = div.querySelectorAll('h1, h2, h3, h4, h5, h6');
+        headings.forEach(heading => {
+          heading.style.fontWeight = 'bold';
+          heading.style.color = '#F97316'; // Orange for headings
+          heading.style.borderBottom = '1px solid #F97316';
+          heading.style.marginTop = '0.75rem';
+        });
+      };
+      
+      // Apply highlighting
+      if (div.innerHTML) {
+        highlightLinks();
+      }
+      
+      // Create a MutationObserver to detect content changes
+      const observer = new MutationObserver(highlightLinks);
+      observer.observe(div, { childList: true, subtree: true });
+      
+      return () => observer.disconnect();
+    }
+  }, [isInput, direction]);
+
   return (
     <div className="editor-panel">
       <h2 id={`${isInput ? 'input' : 'output'}-label`}>{title}</h2>
       <div className="editor-wrapper">
-        {isInput ? (
+        {isInput && direction === "markdown-to-rich" ? (
           <Textarea 
             id={id}
             value={value}
@@ -56,8 +93,28 @@ const EditorPanel = ({
             onClick={onClick}
             onPaste={onPaste}
             className="min-h-[400px] resize-none"
-            placeholder={direction === "markdown-to-rich" ? "Paste your markdown text here..." : "Paste your rich text here..."}
+            placeholder="Paste your markdown text here..."
           />
+        ) : isInput && direction === "rich-to-markdown" ? (
+          <div 
+            id={id}
+            ref={divRef}
+            className="rich-editor min-h-[400px] p-4 overflow-auto"
+            contentEditable={true}
+            onInput={(e) => {
+              if (onChange) {
+                const event = {
+                  target: {
+                    value: e.currentTarget.innerHTML
+                  }
+                } as unknown as React.ChangeEvent<HTMLTextAreaElement>;
+                onChange(event);
+              }
+            }}
+            onClick={onClick}
+            onPaste={onPaste}
+            placeholder="Paste your rich text here..."
+          ></div>
         ) : (
           <div 
             id={id}

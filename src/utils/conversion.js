@@ -16,12 +16,14 @@ turndownService.addRule('links', {
   }
 });
 
-// Add special rule for headings
+// Add special rule for headings with closing tags
 turndownService.addRule('headings', {
   filter: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
   replacement: function(content, node) {
     const level = Number(node.nodeName.charAt(1));
-    return `\n${'#'.repeat(level)} ${content}\n`;
+    const hashes = '#'.repeat(level);
+    // Add opening and closing hashes for better clarity
+    return `\n${hashes} ${content} ${hashes}\n`;
   }
 });
 

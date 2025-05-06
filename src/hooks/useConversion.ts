@@ -17,6 +17,13 @@ export const useConversion = () => {
   
   // Handle input change
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    // For rich-to-markdown, we might get HTML content
+    if (direction === "rich-to-markdown" && e.target.value.includes('<')) {
+      // This is likely HTML content
+      console.log("HTML input detected:", e.target.value);
+      setHtmlInput(e.target.value);
+    }
+    
     setInputText(e.target.value);
   };
   
@@ -40,16 +47,28 @@ export const useConversion = () => {
       if (pastedHtmlRef.current) {
         // We have pasted HTML content, use that directly
         let htmlToConvert = pastedHtmlRef.current;
+        console.log("Converting pasted HTML:", htmlToConvert);
         result = richTextToMarkdown(htmlToConvert);
         pastedHtmlRef.current = null; // Clear after using
+      } else if (htmlInput) {
+        // We have HTML from the input
+        console.log("Converting HTML input:", htmlInput);
+        result = richTextToMarkdown(htmlInput);
+        setHtmlInput(null); // Clear after using
       } else if (isHTML(processedInput)) {
         // Input appears to be HTML
+        console.log("Converting detected HTML:", processedInput);
         result = richTextToMarkdown(processedInput);
       } else {
         // Try to get content from the input textarea (might be html that was pasted)
         const inputArea = document.getElementById("input-area");
-        if (inputArea instanceof HTMLTextAreaElement) {
+        if (inputArea instanceof HTMLElement && inputArea.innerHTML) {
+          // Get HTML content
+          console.log("Converting from innerHTML:", inputArea.innerHTML);
+          result = richTextToMarkdown(inputArea.innerHTML);
+        } else {
           // Plain text input, treat as HTML by wrapping in a div
+          console.log("Converting plain text as HTML:", processedInput);
           result = richTextToMarkdown(`<div>${processedInput}</div>`);
         }
       }
@@ -106,8 +125,38 @@ export const useConversion = () => {
       // Check if there's HTML content in the clipboard
       if (clipboardData.types.includes('text/html')) {
         // Store the HTML content for later use during conversion
-        pastedHtmlRef.current = clipboardData.getData('text/html');
-        console.log("HTML content captured from clipboard", pastedHtmlRef.current);
+        const html = clipboardData.getData('text/html');
+        pastedHtmlRef.current = html;
+        console.log("HTML content captured from clipboard", html);
+        
+        // If this is the rich text input, we want to show the content as rich text
+        const inputArea = document.getElementById("input-area");
+        if (inputArea instanceof HTMLElement) {
+          // Need a short timeout to let the default paste happen first
+          setTimeout(() => {
+            // If the input is a div, update its innerHTML to show the rich text
+            if (inputArea.tagName === 'DIV') {
+              // Create a temporary container to sanitize the HTML
+              const tempDiv = document.createElement('div');
+              tempDiv.innerHTML = html;
+              
+              // Extract only the content we want to display
+              let contentToShow = tempDiv.innerHTML;
+              
+              // Update the input area with the HTML content
+              inputArea.innerHTML = contentToShow;
+              
+              // Store the text content for the input state
+              setInputText(inputArea.innerHTML);
+              setHtmlInput(contentToShow);
+              
+              // Prevent the default paste to avoid double paste
+              e.preventDefault();
+              
+              console.log("Updated input area with rich content:", contentToShow);
+            }
+          }, 0);
+        }
       }
     }
   };
