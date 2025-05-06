@@ -53,18 +53,22 @@ const EditorPanel = ({
       const highlightLinks = () => {
         const links = div.querySelectorAll('a');
         links.forEach(link => {
-          link.style.color = '#8B5CF6'; // Vivid purple color
-          link.style.textDecoration = 'underline';
-          link.style.fontWeight = 'bold';
+          if (link instanceof HTMLElement) {
+            link.style.color = '#8B5CF6'; // Vivid purple color
+            link.style.textDecoration = 'underline';
+            link.style.fontWeight = 'bold';
+          }
         });
         
         // Highlight headings with a distinct styling
         const headings = div.querySelectorAll('h1, h2, h3, h4, h5, h6');
         headings.forEach(heading => {
-          heading.style.fontWeight = 'bold';
-          heading.style.color = '#F97316'; // Orange for headings
-          heading.style.borderBottom = '1px solid #F97316';
-          heading.style.marginTop = '0.75rem';
+          if (heading instanceof HTMLElement) {
+            heading.style.fontWeight = 'bold';
+            heading.style.color = '#F97316'; // Orange for headings
+            heading.style.borderBottom = '1px solid #F97316';
+            heading.style.marginTop = '0.75rem';
+          }
         });
       };
       
@@ -99,7 +103,7 @@ const EditorPanel = ({
           <div 
             id={id}
             ref={divRef}
-            className="rich-editor min-h-[400px] p-4 overflow-auto"
+            className="rich-editor min-h-[400px] p-4 overflow-auto empty:before:content-[attr(data-placeholder)] empty:before:text-gray-400"
             contentEditable={true}
             onInput={(e) => {
               if (onChange) {
@@ -113,7 +117,7 @@ const EditorPanel = ({
             }}
             onClick={onClick}
             onPaste={onPaste}
-            placeholder="Paste your rich text here..."
+            data-placeholder="Paste your rich text here..."
           ></div>
         ) : (
           <div 

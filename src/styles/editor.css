@@ -40,3 +40,27 @@
   padding: 0;
   background-color: transparent;
 }
+
+/* Style for placeholder text in contentEditable div */
+.rich-editor[contenteditable=true]:empty:before {
+  content: attr(data-placeholder);
+  color: #9ca3af;
+  font-style: italic;
+  pointer-events: none;
+  display: block;
+}
+
+/* Make links visually stand out in the rich editor */
+.rich-editor a {
+  color: #8B5CF6;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+/* Make headings visually distinct in the rich editor */
+.rich-editor h1, .rich-editor h2, .rich-editor h3, 
+.rich-editor h4, .rich-editor h5, .rich-editor h6 {
+  color: #F97316;
+  border-bottom: 1px solid #F97316;
+  font-weight: bold;
+}
