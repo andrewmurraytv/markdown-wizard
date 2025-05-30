@@ -8,6 +8,7 @@ import ConversionDirection from "@/components/conversion/ConversionDirection";
 import DirectionToggle from "@/components/conversion/DirectionToggle";
 import FeaturesSection from "@/components/conversion/FeaturesSection";
 import Footer from "@/components/conversion/Footer";
+import BottomPromoBar from "@/components/conversion/BottomPromoBar";
 import { useConversion } from "@/hooks/useConversion";
 
 const Index = () => {
@@ -51,7 +52,7 @@ const Index = () => {
   };
 
   return (
-    <div className="app-container">
+    <div className="app-container pb-16">
       <Header 
         themeEnabled={themeEnabled}
         onToggleTheme={handleThemeToggle}
@@ -101,6 +102,7 @@ const Index = () => {
       
       <FeaturesSection />
       <Footer />
+      <BottomPromoBar />
     </div>
   );
 };

@@ -64,3 +64,14 @@
   border-bottom: 1px solid #F97316;
   font-weight: bold;
 }
+
+/* Wiggle animation for the bottom promo bar */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(1deg); }
+  75% { transform: rotate(-1deg); }
+}
+
+.wiggle-animation {
+  animation: wiggle 2s ease-in-out infinite;
+}
