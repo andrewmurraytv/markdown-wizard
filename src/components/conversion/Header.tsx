@@ -12,8 +12,9 @@ const Header = ({ themeEnabled, onToggleTheme }: HeaderProps) => {
     <header className="relative z-10 flex flex-col items-center p-4 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
       {/* Central title */}
       <div className="text-center mb-4">
-        <h1 className="font-caveat text-4xl mb-1 text-accent-primary">Markdown Wizard</h1>
-        <p className="subtitle">Convert between markdown and rich text with ease</p>
+        <h1 className="font-caveat text-4xl mb-1 text-accent-primary">Markdown Converter Wizard</h1>
+        <p className="subtitle">Convert Markdown to Rich-Text with ease.</p>
+        <p className="subtitle">Always 100% Free. No Signup.</p>
       </div>
       
       <div className="relative">
