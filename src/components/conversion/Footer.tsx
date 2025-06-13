@@ -7,7 +7,10 @@ const Footer = () => {
       <p className="text-muted-foreground">Convert rich text to Markdown with ease</p>
       <p className="text-xs text-muted-foreground mt-2">Perfect for cleaning and formatting outputs</p>
       
-      <div className="mt-4">
+      <div className="mt-6">
+        <h3 className="text-lg font-semibold text-text-primary mb-4">
+          Does This Markdown Converter Tool Save You Time?
+        </h3>
         <a 
           href="https://buymeacoffee.com/andrewmurray" 
           target="_blank" 
