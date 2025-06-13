@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Bookmark } from "lucide-react";
 
@@ -14,7 +13,7 @@ const Header = ({ themeEnabled, onToggleTheme }: HeaderProps) => {
       <div className="text-center mb-4">
         <h1 className="font-caveat text-4xl mb-1 text-accent-primary">Markdown Converter Wizard</h1>
         <p className="subtitle">Convert Markdown to Rich-Text with ease.</p>
-        <p className="subtitle">Always 100% Free. No Signup.</p>
+        <p className="subtitle -mt-3">Always 100% Free. No Signup.</p>
       </div>
       
       <div className="relative">
