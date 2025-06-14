@@ -7,6 +7,7 @@ import EditorPanel from "@/components/conversion/EditorPanel";
 import ConversionDirection from "@/components/conversion/ConversionDirection";
 import DirectionToggle from "@/components/conversion/DirectionToggle";
 import FeaturesSection from "@/components/conversion/FeaturesSection";
+import KitOptinForm from "@/components/conversion/KitOptinForm";
 import Footer from "@/components/conversion/Footer";
 import BottomPromoBar from "@/components/conversion/BottomPromoBar";
 import { useConversion } from "@/hooks/useConversion";
@@ -101,6 +102,7 @@ const Index = () => {
       </div>
       
       <FeaturesSection />
+      <KitOptinForm />
       <Footer />
       <BottomPromoBar />
     </div>
