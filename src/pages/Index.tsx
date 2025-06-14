@@ -100,6 +100,9 @@ const Index = () => {
         />
       </div>
       
+      {/* Kit.com optin script */}
+      <script async data-uid="24e6d0a18f" src="https://3.kit.com/24e6d0a18f/index.js"></script>
+      
       <FeaturesSection />
       <Footer />
       <BottomPromoBar />
