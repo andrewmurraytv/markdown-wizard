@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { richTextToMarkdown, markdownToRichText, removeCitationMarkers, isHTML, prepareHTMLForConversion } from "../utils/conversion";
 
@@ -78,6 +77,31 @@ export const useConversion = () => {
     }
     
     setOutputText(result);
+  };
+
+  // Clear both input and output content
+  const handleClear = () => {
+    setInputText("");
+    setOutputText("");
+    setHtmlInput(null);
+    pastedHtmlRef.current = null;
+    
+    // Clear the actual DOM elements
+    const inputArea = document.getElementById("input-area");
+    const outputArea = document.getElementById("output-area");
+    
+    if (inputArea) {
+      if (inputArea.tagName === 'TEXTAREA') {
+        (inputArea as HTMLTextAreaElement).value = "";
+      } else {
+        inputArea.innerHTML = "";
+      }
+    }
+    
+    if (outputArea) {
+      outputArea.innerHTML = "";
+      outputArea.textContent = "";
+    }
   };
   
   // Copy to clipboard
@@ -174,6 +198,7 @@ export const useConversion = () => {
     setDirection,
     handleInputChange,
     handleConvert,
+    handleClear,
     handleCopy,
     handleInputClick,
     handlePaste

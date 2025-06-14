@@ -5,10 +5,11 @@ import { ConversionDirection as DirectionType } from "@/hooks/useConversion";
 
 interface ConversionDirectionProps {
   onConvert: () => void;
+  onClear: () => void;
   direction: DirectionType;
 }
 
-const ConversionDirection = ({ onConvert, direction }: ConversionDirectionProps) => {
+const ConversionDirection = ({ onConvert, onClear, direction }: ConversionDirectionProps) => {
   return (
     <div className="flex flex-col items-center">
       <div className="conversion-direction flex flex-col items-center mb-2">
@@ -19,10 +20,19 @@ const ConversionDirection = ({ onConvert, direction }: ConversionDirectionProps)
       
       <Button 
         id="convert-btn" 
-        className="primary-btn mb-4 w-36"
+        className="primary-btn mb-2 w-36"
         onClick={onConvert}
       >
         Convert
+      </Button>
+
+      <Button 
+        id="clear-btn" 
+        className="secondary-btn mb-4 w-36"
+        onClick={onClear}
+        variant="outline"
+      >
+        Clear Content
       </Button>
     </div>
   );

@@ -26,6 +26,7 @@ const Index = () => {
     setDirection,
     handleInputChange,
     handleConvert,
+    handleClear,
     handleCopy,
     handleInputClick,
     handlePaste
@@ -87,6 +88,7 @@ const Index = () => {
         <div className="actions flex flex-col items-center">
           <ConversionDirection 
             onConvert={handleConvert}
+            onClear={handleClear}
             direction={direction}
           />
         </div>
