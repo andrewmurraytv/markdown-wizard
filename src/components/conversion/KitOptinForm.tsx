@@ -20,9 +20,24 @@ const KitOptinForm = () => {
   }, []);
 
   return (
-    <div className="kit-optin-container my-8 p-4">
-      {/* The Kit.com script will inject the form here */}
-    </div>
+    <section className="newsletter-section py-12 bg-background">
+      <div className="container mx-auto px-4">
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="text-2xl font-bold text-foreground mb-4">
+            Stay Updated
+          </h2>
+          <p className="text-muted-foreground mb-8">
+            Get notified about new features and updates to Markdown Converter Wizard
+          </p>
+          <div 
+            id="kit-form-container" 
+            className="kit-optin-container w-full max-w-md mx-auto"
+          >
+            {/* The Kit.com script will inject the form here */}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 
