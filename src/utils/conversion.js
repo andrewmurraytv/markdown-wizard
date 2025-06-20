@@ -1,4 +1,3 @@
-
 // Initialize TurndownService for HTML to Markdown conversion
 const turndownService = new TurndownService({
   headingStyle: 'atx',
@@ -65,7 +64,11 @@ export function removeCitationMarkers(text) {
 // Convert Markdown to Rich Text (HTML)
 export function markdownToRichText(markdown) {
   if (!markdown) return '';
-  return marked.parse(markdown);
+  
+  // Clean up any "Title:" prefixes that might be in the markdown
+  let cleanedMarkdown = markdown.replace(/^Title:\s*/gm, '');
+  
+  return marked.parse(cleanedMarkdown);
 }
 
 // Cleans HTML for better copy-paste experience
