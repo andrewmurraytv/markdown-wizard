@@ -8,11 +8,26 @@
     <meta name="description" content="Convert between markdown and rich text with ease" />
     <meta name="author" content="Markdown Wizard" />
     <link rel="icon" href="/lovable-uploads/66074554-13bb-47dd-b14a-75cf05e9ed95.png" type="image/png">
-    <link rel="stylesheet" href="src/styles.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap">
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/turndown/dist/turndown.js"></script>
+    
+    <!-- Preload critical fonts for better performance -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- Non-render-blocking stylesheets -->
+    <link rel="stylesheet" href="src/styles.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+    <!-- Fallback for browsers that don't support onload -->
+    <noscript>
+      <link rel="stylesheet" href="src/styles.css">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap">
+    </noscript>
+    
+    <!-- Non-render-blocking JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/turndown/dist/turndown.js" defer></script>
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
   </head>
 
