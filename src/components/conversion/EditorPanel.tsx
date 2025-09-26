@@ -87,7 +87,19 @@ const EditorPanel = ({
 
   return (
     <div className="editor-panel">
-      <h2 id={`${isInput ? 'input' : 'output'}-label`}>{title}</h2>
+      <div className="flex justify-between items-center p-4 bg-secondary border-b">
+        <h2 id={`${isInput ? 'input' : 'output'}-label`} className="text-sm font-medium m-0">{title}</h2>
+        {!isInput && onCopy && (
+          <Button 
+            onClick={onCopy}
+            variant="outline"
+            size="sm"
+            className="text-xs"
+          >
+            Copy
+          </Button>
+        )}
+      </div>
       <div className="editor-wrapper">
         {isInput && direction === "markdown-to-rich" ? (
           <Textarea 
