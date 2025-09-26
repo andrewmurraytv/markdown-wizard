@@ -20,17 +20,18 @@ const ConversionDirection = ({ onConvert, onClear, direction }: ConversionDirect
       
       <Button 
         id="convert-btn" 
-        className="primary-btn mb-2 w-36"
+        className="mb-2 w-36"
         onClick={onConvert}
+        variant="blue"
       >
         Convert
       </Button>
 
       <Button 
         id="clear-btn" 
-        className="secondary-btn mb-4 w-36"
+        className="mb-4 w-36"
         onClick={onClear}
-        variant="outline"
+        variant="blue"
       >
         Clear Content
       </Button>

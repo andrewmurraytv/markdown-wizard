@@ -19,7 +19,7 @@ const DirectionToggle = ({ direction, setDirection }: DirectionToggleProps) => {
       
       <div className="flex flex-wrap justify-center gap-2">
         <Button
-          variant={direction === "markdown-to-rich" ? "default" : "outline"}
+          variant={direction === "markdown-to-rich" ? "blue" : "outline"}
           onClick={() => toggleDirection("markdown-to-rich")}
           className="flex-1 max-w-xs"
         >
@@ -27,7 +27,7 @@ const DirectionToggle = ({ direction, setDirection }: DirectionToggleProps) => {
         </Button>
         
         <Button
-          variant={direction === "rich-to-markdown" ? "default" : "outline"}
+          variant={direction === "rich-to-markdown" ? "blue" : "outline"}
           onClick={() => toggleDirection("rich-to-markdown")}
           className="flex-1 max-w-xs"
         >
