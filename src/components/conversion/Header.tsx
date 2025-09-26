@@ -17,9 +17,23 @@ const Header = ({ themeEnabled, onToggleTheme }: HeaderProps) => {
       </div>
       
       <div className="relative">
-        <p className="bookmark-text flex items-center gap-1 text-sm text-gray-600 mt-1">
+        <button 
+          onClick={() => {
+            if (navigator.share) {
+              navigator.share({
+                title: 'Markdown Converter Wizard',
+                url: window.location.href
+              });
+            } else {
+              const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+              const shortcut = isMac ? 'Cmd+D' : 'Ctrl+D';
+              alert(`To bookmark this tool, press ${shortcut} or use your browser's bookmark button.`);
+            }
+          }}
+          className="bookmark-text flex items-center gap-1 text-sm text-gray-600 mt-1 hover:text-gray-800 transition-colors cursor-pointer"
+        >
           <Bookmark className="h-4 w-4" /> Bookmark this tool
-        </p>
+        </button>
       </div>
       
       {/* Theme toggle */}
