@@ -38,12 +38,12 @@
 }
 
 .primary-btn {
-  background-color: var(--accent-primary);
+  background-color: #3b82f6;
   color: white;
 }
 
 .primary-btn:hover {
-  background-color: var(--accent-secondary);
+  background-color: #2563eb;
 }
 
 .primary-btn:active::after, 
@@ -77,15 +77,15 @@
 }
 
 .secondary-btn {
-  background-color: var(--bg-secondary);
-  color: var(--text-primary);
-  border: 1px solid var(--border-color);
+  background-color: #3b82f6;
+  color: white;
+  border: 1px solid #2563eb;
   margin: 1rem;
   align-self: flex-end;
 }
 
 .secondary-btn:hover {
-  background-color: var(--border-color);
+  background-color: #2563eb;
 }
 
 .icon-btn {
@@ -96,13 +96,13 @@
   align-items: center;
   justify-content: center;
   font-size: 1.25rem;
-  background-color: var(--bg-secondary);
-  color: var(--text-primary);
-  border: 1px solid var(--border-color);
+  background-color: #3b82f6;
+  color: white;
+  border: 1px solid #2563eb;
 }
 
 .icon-btn:hover {
-  background-color: var(--border-color);
+  background-color: #2563eb;
 }
 
 .direction-toggle-container {
