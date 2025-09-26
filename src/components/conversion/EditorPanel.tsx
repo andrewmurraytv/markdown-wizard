@@ -92,7 +92,7 @@ const EditorPanel = ({
         {!isInput && onCopy && (
           <Button 
             onClick={onCopy}
-            variant="outline"
+            variant="blue"
             size="sm"
             className="text-xs"
           >
@@ -143,9 +143,9 @@ const EditorPanel = ({
       {!isInput && onCopy && (
         <Button 
           id="copy-btn" 
-          className="secondary-btn mt-2"
+          className="mt-2"
           onClick={onCopy}
-          variant="outline"
+          variant="blue"
         >
           Copy to Clipboard
         </Button>
