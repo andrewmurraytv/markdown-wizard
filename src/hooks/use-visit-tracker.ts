@@ -15,16 +15,13 @@ export const useVisitTracker = () => {
   // Track input box clicks
   const trackInputClick = () => {
     const newClickCount = clickCount + 1;
-    console.log("Input clicked, new count:", newClickCount);
     setClickCount(newClickCount);
     
     // After 3 clicks, prompt signup if not logged in
     if (newClickCount >= 3 && !user) {
-      console.log("Showing signup prompt after 3 clicks");
       setShouldPromptSignup(true);
       // We'll redirect to auth after a short delay
       setTimeout(() => {
-        console.log("Redirecting to auth page");
         navigate('/auth?tab=signup');
       }, 2000);
     }
@@ -40,9 +37,6 @@ export const useVisitTracker = () => {
         if (!visitorId) {
           visitorId = crypto.randomUUID();
           localStorage.setItem('visitor_id', visitorId);
-          console.log("Created new visitor ID:", visitorId);
-        } else {
-          console.log("Using existing visitor ID:", visitorId);
         }
 
         // Check for previous visits
@@ -62,7 +56,6 @@ export const useVisitTracker = () => {
 
         // Set first visit status
         setIsFirstVisit(visits?.length === 0);
-        console.log("First visit?", visits?.length === 0);
         
       } catch (error) {
         console.error('Error tracking visit:', error);
