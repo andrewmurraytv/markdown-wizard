@@ -43,14 +43,14 @@ export const useVisitTracker = () => {
         const { data: visits } = await supabase
           .from('user_visits')
           .select('*')
-          .eq('ip_address', visitorId);
+          .eq('visitor_id', visitorId);
 
         // Record this visit
         await supabase
           .from('user_visits')
           .insert({
             user_id: user?.id || null,
-            ip_address: visitorId,
+            visitor_id: visitorId,
             registered: !!user
           });
 
