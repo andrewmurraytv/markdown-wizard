@@ -34,10 +34,10 @@ const PrivacyPolicy = () => {
               <li><strong>Usage Analytics:</strong> Basic usage statistics such as visit dates and conversion counts to understand how our tool is being used.</li>
             </ul>
 
-            <h3 className="text-xl font-medium text-foreground mb-3 mt-6">Optional User Registration</h3>
+            <h3 className="text-xl font-medium text-foreground mb-3 mt-6">Optional Email Signup</h3>
             <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
-              <li><strong>Account Information:</strong> If you choose to create an account, we store your email address and any profile information you provide.</li>
-              <li><strong>Authentication Data:</strong> Login credentials are securely managed through Supabase authentication services.</li>
+              <li><strong>Newsletter Subscription:</strong> If you choose to subscribe to our newsletter via the Kit.com form, your email address will be stored by Kit.com for sending updates and tips.</li>
+              <li><strong>No Account Required:</strong> You can use our markdown conversion tool without creating any account or providing personal information.</li>
             </ul>
           </section>
 
@@ -54,7 +54,7 @@ const PrivacyPolicy = () => {
             <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
               <li>To provide and improve our markdown conversion service</li>
               <li>To understand usage patterns and optimize performance</li>
-              <li>To communicate with you if you have an account (service updates, support)</li>
+              <li>To send newsletters and updates if you've opted in via Kit.com</li>
             </ul>
           </section>
 
@@ -86,8 +86,9 @@ const PrivacyPolicy = () => {
             <h2 className="text-2xl font-semibold text-foreground mb-4">Your Rights</h2>
             <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
               <li><strong>Access:</strong> You can request information about data we store about you</li>
-              <li><strong>Deletion:</strong> You can request deletion of your account and associated data</li>
+              <li><strong>Deletion:</strong> You can request removal from our newsletter if you've subscribed</li>
               <li><strong>Local Data:</strong> You can clear visitor tracking data by clearing your browser's local storage</li>
+              <li><strong>No Account Data:</strong> Since no account is required to use the tool, there's no account data to manage</li>
             </ul>
           </section>
 
@@ -97,7 +98,7 @@ const PrivacyPolicy = () => {
               Our service uses the following third-party services:
             </p>
             <ul className="list-disc pl-6 space-y-2 text-muted-foreground mt-3">
-              <li><strong>Supabase:</strong> For authentication and database services</li>
+              <li><strong>Kit.com:</strong> For newsletter subscriptions (optional)</li>
               <li><strong>Visitor Tracking:</strong> For usage analytics</li>
               <li><strong>Microsoft Clarity:</strong> For website analytics</li>
             </ul>
