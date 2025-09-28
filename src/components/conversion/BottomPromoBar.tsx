@@ -4,7 +4,10 @@ import React from "react";
 const BottomPromoBar = () => {
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50">
-      <div className="bg-red-800 text-white py-3 px-4 text-center animate-pulse">
+      <div 
+        className="text-white py-3 px-4 text-center animate-pulse"
+        style={{ backgroundColor: '#E5021A' }}
+      >
         <a 
           href="https://get.descript.com/markdown" 
           target="_blank" 

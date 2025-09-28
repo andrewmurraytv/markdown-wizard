@@ -1,14 +1,9 @@
 import React from "react";
 import { Bookmark } from "lucide-react";
 
-interface HeaderProps {
-  themeEnabled?: boolean;
-  onToggleTheme?: (enabled: boolean) => void;
-}
-
-const Header = ({ themeEnabled, onToggleTheme }: HeaderProps) => {
+const Header = () => {
   return (
-    <header className="relative z-10 flex flex-col items-center p-4 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+    <header className="relative z-10 flex flex-col items-center p-4 bg-white border-b border-gray-200">
       {/* Central title */}
       <div className="text-center mb-4">
         <h1 className="font-caveat text-4xl mb-1 text-accent-primary">Markdown Converter Wizard</h1>
@@ -34,23 +29,6 @@ const Header = ({ themeEnabled, onToggleTheme }: HeaderProps) => {
         >
           <Bookmark className="h-4 w-4" /> Bookmark this tool
         </button>
-      </div>
-      
-      {/* Theme toggle */}
-      <div className="absolute right-4 top-4">
-        <div className="theme-toggle">
-          <input 
-            type="checkbox" 
-            id="theme-switch" 
-            className="theme-switch-input"
-            checked={themeEnabled}
-            onChange={(e) => onToggleTheme && onToggleTheme(e.target.checked)}
-          />
-          <label htmlFor="theme-switch" className="theme-switch-label">
-            <span>🌙</span>
-            <span>☀️</span>
-          </label>
-        </div>
       </div>
     </header>
   );

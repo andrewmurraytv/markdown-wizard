@@ -13,7 +13,6 @@ import BottomPromoBar from "@/components/conversion/BottomPromoBar";
 import { useConversion } from "@/hooks/useConversion";
 
 const Index = () => {
-  const [themeEnabled, setThemeEnabled] = useState(false);
   
   const {
     inputText,
@@ -32,38 +31,9 @@ const Index = () => {
     handlePaste
   } = useConversion();
 
-  // Add effect to update theme synchronously to prevent flash
-  useEffect(() => {
-    // Check for saved theme preference immediately
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-      setThemeEnabled(true);
-      document.body.setAttribute('data-theme', 'dark');
-    } else {
-      setThemeEnabled(false);
-      document.body.removeAttribute('data-theme');
-    }
-  }, []);
-  
-  const handleThemeToggle = (enabled: boolean) => {
-    setThemeEnabled(enabled);
-    if (enabled) {
-      document.body.setAttribute('data-theme', 'dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.body.removeAttribute('data-theme');
-      localStorage.setItem('theme', 'light');
-    }
-  };
-
   return (
     <div className="app-container pb-16" style={{ minHeight: '100vh' }}>
-      <Header 
-        themeEnabled={themeEnabled}
-        onToggleTheme={handleThemeToggle}
-      />
+      <Header />
 
       <DirectionToggle 
         direction={direction}
