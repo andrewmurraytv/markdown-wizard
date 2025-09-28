@@ -86,8 +86,8 @@ const EditorPanel = ({
   }, [isInput, direction]);
 
   return (
-    <div className="editor-panel">
-      <div className="flex justify-between items-center p-4 bg-secondary border-b">
+    <div className="editor-panel min-h-[460px] flex flex-col">
+      <div className="flex justify-between items-center p-4 bg-secondary border-b flex-shrink-0">
         <h2 id={`${isInput ? 'input' : 'output'}-label`} className="text-sm font-medium m-0">{title}</h2>
         {!isInput && onCopy && (
           <Button 
@@ -100,7 +100,7 @@ const EditorPanel = ({
           </Button>
         )}
       </div>
-      <div className="editor-wrapper">
+      <div className="editor-wrapper flex-1 min-h-[400px]">
         {isInput && direction === "markdown-to-rich" ? (
           <Textarea 
             id={id}
@@ -108,15 +108,17 @@ const EditorPanel = ({
             onChange={onChange}
             onClick={onClick}
             onPaste={onPaste}
-            className="min-h-[400px] resize-none"
+            className="h-full min-h-[400px] resize-none border-0 rounded-none"
             placeholder="Paste your markdown text here..."
+            style={{ height: '400px' }}
           />
         ) : isInput && direction === "rich-to-markdown" ? (
           <div 
             id={id}
             ref={divRef}
-            className="rich-editor min-h-[400px] p-4 overflow-auto empty:before:content-[attr(data-placeholder)] empty:before:text-gray-400"
+            className="rich-editor h-full min-h-[400px] p-4 overflow-auto empty:before:content-[attr(data-placeholder)] empty:before:text-gray-400"
             contentEditable={true}
+            style={{ height: '400px' }}
             onInput={(e) => {
               if (onChange) {
                 const event = {
@@ -135,8 +137,9 @@ const EditorPanel = ({
           <div 
             id={id}
             ref={divRef}
-            className={isMarkdownMode ? "rich-editor min-h-[400px] p-4 overflow-auto" : "rich-editor min-h-[400px] p-4 overflow-auto"}
+            className="rich-editor h-full min-h-[400px] p-4 overflow-auto"
             contentEditable={contentEditable}
+            style={{ height: '400px' }}
           ></div>
         )}
       </div>

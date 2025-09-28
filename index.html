@@ -25,6 +25,81 @@
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     
+    <!-- Critical inline styles to prevent layout shifts -->
+    <style>
+      /* Critical styles to prevent layout shifts */
+      #root { 
+        display: flex; 
+        min-height: 100vh; 
+        width: 100%; 
+      }
+      .app-container { 
+        width: 100%; 
+        max-width: 1280px; 
+        margin: 0 auto; 
+        padding: 2rem; 
+      }
+      .editor-container {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        min-height: 500px; /* Reserve space to prevent shifts */
+      }
+      .editor-panel {
+        min-height: 460px; /* Reserve space for editor panels */
+        background-color: #ffffff;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+      .actions {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 0.5rem;
+        padding-top: 1rem;
+        min-width: 120px; /* Prevent horizontal shifts */
+      }
+      header {
+        min-height: 120px; /* Reserve space for header */
+      }
+      
+      /* Mobile responsive adjustments */
+      @media (max-width: 768px) {
+        .editor-container {
+          grid-template-columns: 1fr;
+          grid-template-areas: 
+            "input"
+            "actions"
+            "output";
+          min-height: 1000px; /* Reserve more space on mobile */
+        }
+        .actions {
+          flex-direction: row;
+          justify-content: center;
+          min-height: 60px;
+        }
+      }
+      
+      /* Prevent theme flash */
+      [data-theme="dark"] {
+        background-color: #0f172a;
+        color: #f1f5f9;
+      }
+    </style>
+    
+    <!-- Inline theme detection script to prevent flash -->
+    <script>
+      (function() {
+        const theme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (theme === 'dark' || (!theme && prefersDark)) {
+          document.body.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+
     <!-- Non-render-blocking stylesheets -->
     <link rel="stylesheet" href="src/styles.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
@@ -37,10 +112,13 @@
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap">
     </noscript>
     
+    <!-- Preload critical resources -->
+    <link rel="modulepreload" href="src/main.tsx">
+    
     <!-- Non-render-blocking JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/turndown/dist/turndown.js" defer></script>
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module" defer></script>
     
   
   

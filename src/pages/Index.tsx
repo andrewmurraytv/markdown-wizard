@@ -32,13 +32,18 @@ const Index = () => {
     handlePaste
   } = useConversion();
 
-  // Add effect to update theme
+  // Add effect to update theme synchronously to prevent flash
   useEffect(() => {
-    // Check for saved theme preference
+    // Check for saved theme preference immediately
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
       setThemeEnabled(true);
       document.body.setAttribute('data-theme', 'dark');
+    } else {
+      setThemeEnabled(false);
+      document.body.removeAttribute('data-theme');
     }
   }, []);
   
@@ -54,7 +59,7 @@ const Index = () => {
   };
 
   return (
-    <div className="app-container pb-16">
+    <div className="app-container pb-16" style={{ minHeight: '100vh' }}>
       <Header 
         themeEnabled={themeEnabled}
         onToggleTheme={handleThemeToggle}
