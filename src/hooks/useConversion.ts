@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { richTextToMarkdown, markdownToRichText, removeCitationMarkers, isHTML, prepareHTMLForConversion } from "../utils/conversion";
+import { validateConversionInput, checkRateLimit, logSecurityEvent } from "../utils/security";
+import { toast } from "sonner";
 
 export type ConversionDirection = "markdown-to-rich" | "rich-to-markdown";
 
@@ -28,6 +30,25 @@ export const useConversion = () => {
   
   // Handle convert button click
   const handleConvert = () => {
+    // Rate limiting check
+    if (!checkRateLimit()) {
+      toast.error("Too many conversion requests. Please wait a moment before trying again.");
+      return;
+    }
+
+    // Input validation
+    const validation = validateConversionInput({
+      text: inputText,
+      direction,
+      removeCitations,
+      plainFormatting
+    });
+
+    if (!validation.success) {
+      toast.error(`Invalid input: ${validation.error}`);
+      return;
+    }
+
     let processedInput = inputText;
     
     // Apply citation removal if checked (for both conversion directions)
@@ -150,6 +171,15 @@ export const useConversion = () => {
       if (clipboardData.types.includes('text/html')) {
         // Store the HTML content for later use during conversion
         const html = clipboardData.getData('text/html');
+        
+        // Validate HTML size
+        if (html.length > 100000) {
+          toast.error("Pasted content is too large (max 100KB)");
+          logSecurityEvent('LARGE_PASTE_BLOCKED', { size: html.length });
+          e.preventDefault();
+          return;
+        }
+        
         pastedHtmlRef.current = html;
         console.log("HTML content captured from clipboard", html);
         

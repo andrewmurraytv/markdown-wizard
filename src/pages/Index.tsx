@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/conversion/Header";
 import ConversionControls from "@/components/conversion/ConversionControls";
 import EditorPanel from "@/components/conversion/EditorPanel";
@@ -33,6 +34,7 @@ const Index = () => {
 
   return (
     <div className="app-container pb-16" style={{ minHeight: '100vh' }}>
+      <Toaster />
       <Header />
 
       <DirectionToggle 

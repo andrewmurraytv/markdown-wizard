@@ -1,3 +1,5 @@
+import DOMPurify from 'dompurify';
+
 // Initialize TurndownService for HTML to Markdown conversion
 const turndownService = new TurndownService({
   headingStyle: 'atx',
@@ -68,7 +70,13 @@ export function markdownToRichText(markdown) {
   // Clean up any "Title:" prefixes that might be in the markdown
   let cleanedMarkdown = markdown.replace(/^Title:\s*/gm, '');
   
-  return marked.parse(cleanedMarkdown);
+  // Parse markdown to HTML and sanitize the output
+  const rawHtml = marked.parse(cleanedMarkdown);
+  return DOMPurify.sanitize(rawHtml, {
+    ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 's', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'a', 'blockquote', 'code', 'pre', 'img'],
+    ALLOWED_ATTR: ['href', 'title', 'alt', 'src', 'class'],
+    ALLOW_DATA_ATTR: false
+  });
 }
 
 // Cleans HTML for better copy-paste experience
@@ -98,9 +106,16 @@ export function isHTML(text) {
 export function prepareHTMLForConversion(html) {
   if (!html) return '';
   
+  // Sanitize HTML input first to prevent injection attacks
+  const sanitizedHtml = DOMPurify.sanitize(html, {
+    ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 's', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'a', 'blockquote', 'code', 'pre', 'img', 'div', 'span'],
+    ALLOWED_ATTR: ['href', 'title', 'alt', 'src', 'class'],
+    ALLOW_DATA_ATTR: false
+  });
+  
   // Create a temporary div to normalize and clean up HTML
   const tempDiv = document.createElement('div');
-  tempDiv.innerHTML = html;
+  tempDiv.innerHTML = sanitizedHtml;
   
   // Process all links to ensure they're properly preserved
   const links = tempDiv.querySelectorAll('a');
