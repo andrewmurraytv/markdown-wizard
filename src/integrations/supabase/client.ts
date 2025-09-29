@@ -2,8 +2,9 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from './types';
 
-const SUPABASE_URL = "https://faepemvsxoqwuuqziozf.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZhZXBlbXZzeG9xd3V1cXppb3pmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM4ODM1MzQsImV4cCI6MjA1OTQ1OTUzNH0.ecanHW6Zt1HQBBpdcKtHYmJFpMeIt9Ai88xI1iQn4uA";
+// Configuration will be automatically generated when you connect to Lovable Cloud
+const SUPABASE_URL = "";
+const SUPABASE_PUBLISHABLE_KEY = "";
 
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
